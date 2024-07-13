@@ -11,19 +11,29 @@ def add_empty_armor_diagram(c, armor_diagram_info):
 
 def add_armor_points(c, armor_diagram_info, armor_points):
     # Define the radius of the circles representing armor points
-    circle_radius = 5
+    circle_radius = 3
     
     # Function to draw circles in a grid pattern within a given area
     def draw_circles(x_start, y_start, width, height, num_points):
-        rows = int(height / (2 * circle_radius))
-        cols = int(width / (2 * circle_radius))
+        # Calculate the number of rows and columns based on the number of points
+        cols = int((num_points ** 0.5) + 0.5)
+        rows = int((num_points / cols) + 0.5)
+        
+        # Adjust grid size to ensure all points appear within the given width and height
+        grid_width = width / max(cols, 1)
+        grid_height = height / max(rows, 1)
+        
+        # Calculate the spacing between circles
+        x_spacing = grid_width if grid_width < grid_height else grid_height
+        y_spacing = x_spacing
+        
+        # Draw the circles in the grid
         for i in range(num_points):
             row = i // cols
             col = i % cols
-            if row < rows:
-                x = x_start + col * 2 * circle_radius
-                y = y_start - row * 2 * circle_radius
-                c.circle(x, y, circle_radius, fill=1)
+            x = x_start + col * x_spacing + x_spacing / 2
+            y = y_start - row * y_spacing - y_spacing / 2
+            c.circle(x, y, circle_radius, fill=0)
     
     # Draw circles for each component based on the armor_points dictionary
     for component, points in armor_points.items():

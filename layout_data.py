@@ -91,26 +91,26 @@ layout_info = {
             "margin": 1
         },
         "rear_center": {
-            "x": 300,
-            "y": 50,
-            "width": 15,
-            "height": 70,
+            "x": 475,
+            "y": 327,
+            "width": 20,
+            "height": 59,
             "rotation": 0,  # Example rotation in degrees
             "margin": 1
         },
         "rear_left": {
-            "x": 300,
-            "y": 50,
-            "width": 30,
-            "height": 70,
+            "x": 442,
+            "y": 337,
+            "width": 20,
+            "height": 30,
             "rotation": 0,  # Example rotation in degrees
             "margin": 1
         },
         "rear_right": {
-            "x": 300,
-            "y": 50,
-            "width": 30,
-            "height": 70,
+            "x": 308,
+            "y": 337,
+            "width": 20,
+            "height": 30,
             "rotation": 0,  # Example rotation in degrees
             "margin": 1
         }
@@ -121,8 +121,8 @@ mech_data = {
     "type": "BattleMaster BLR-1G",
     "tonnage": "85",
     "armor_points": {
-        "head": 8,
-        "center_torso": 14,
+        "head": 9,
+        "center_torso": 9,
         "left_torso": 8,
         "right_torso": 35,
         "left_arm": 10,

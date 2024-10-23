@@ -13,15 +13,26 @@ pdfmetrics.registerFont(TTFont('EurostileBold', 'fonts/EurostileBold.ttf'))
 pdfmetrics.registerFont(TTFont('Eurostile', 'fonts/Eurostile.ttf'))
 
 def create_filled_pdf(mech_data, layout_info, output_filename, template_filename):
-    # Delete the existing filled_record_sheet.pdf if it exists
+    # Ensure the output directory exists
+    output_dir = os.path.dirname(output_filename)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    # Delete the existing PDF file if it exists
     if os.path.exists(output_filename):
+        print(f"Deleting old file: {output_filename}")
         os.remove(output_filename)
+    else:
+        print(f"File {output_filename} does not exist, creating a new one.")
 
     # Temporary filename for intermediate content
     temp_filename = "temp_content.pdf"
     
     # Create a new PDF to add text and images
     c = canvas.Canvas(temp_filename, pagesize=letter)
+
+    # Draw the grid first (if needed)
+    # draw_grid(c)
     
     # Add each item from the mech_data to the canvas using the layout_info
     for key, value in mech_data.items():
@@ -63,12 +74,14 @@ def create_filled_pdf(mech_data, layout_info, output_filename, template_filename
     # Add armor points to the armor diagram
     add_armor_points(c, layout_info["armor_diagram"], mech_data["armor_points"])
 
+    # Save the canvas
     c.save()
-    
+
     # Merge the new content on top of the existing template
     template = PdfReader(template_filename)
     new_content = PdfReader(temp_filename)
     writer = PdfWriter()
+
     for page_num in range(len(template.pages)):
         page = template.pages[page_num]
         if page_num < len(new_content.pages):
@@ -76,6 +89,7 @@ def create_filled_pdf(mech_data, layout_info, output_filename, template_filename
             page.merge_page(new_page)
         writer.add_page(page)
     
+    # Write the final PDF to the output file
     with open(output_filename, 'wb') as out:
         writer.write(out)
 

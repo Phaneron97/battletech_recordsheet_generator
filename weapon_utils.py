@@ -7,7 +7,8 @@ def load_weapon_data(csv_filename):
     with open(csv_filename, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            name = row['Name']
+            # Convert Name to lowercase and remove underscores
+            name = row['Name'].lower().replace('_', '')
             weapon_data[name] = {
                 'min': str(row['min']),
                 'sht': str(row['Sht']),

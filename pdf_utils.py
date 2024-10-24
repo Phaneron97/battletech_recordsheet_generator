@@ -71,7 +71,6 @@ def create_filled_pdf(mech_data, layout_info, output_filename, template_filename
     # Add armor points to the armor diagram
     add_armor_points(c, layout_info["armor_diagram"], mech_data["armor_points"])
 
-    # Add weapon details below each other
     # Add weapon details below each other in columns
     start_y = 560
     x_quantity = 48

@@ -164,7 +164,14 @@ mech_data = {
         },
         "left_torso": {
             "PPC": 1,
-            "Medium_laser": 1
+            "Medium_laser": 1,
+            "Large_laser": 1,
+            "ac10": 1,
+            "ac5": 1,
+            "lrm5": 1,
+            "lrm10": 1,
+            "lrm15": 1,
+            "lrm20": 1
         },
         "right_torso": {
             "LRM_5": 1

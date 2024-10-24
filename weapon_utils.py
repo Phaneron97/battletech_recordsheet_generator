@@ -14,6 +14,8 @@ def load_weapon_data(csv_filename):
                 'med': str(row['Med']),
                 'lng': str(row['Lng']),
                 'ht': str(row['Ht']),
+                'dmg': str(row['Dmg']),
+                'slots': str(row['Slots']),
                 'tech_base': row['tech base'],
                 'weapon_type': row['weapon type'],
                 'ton': str(row['Ton'])
@@ -35,21 +37,21 @@ def extract_weapon_details(weapons, weapon_data):
 
     for location, weapon_info in weapons.items():
         for weapon_name, quantity in weapon_info.items():
-            print(weapon_name)
             # Get the corresponding weapon attributes from the weapon data
             if weapon_name in weapon_data:
-                
                 weapon_attributes = weapon_data[weapon_name]
                 weapon_details.append({
                     'quantity': quantity,
                     'name': weapon_name,
                     'location': location_mapping.get(location, 'Unknown'),
                     'heat': weapon_attributes['ht'],
-                    'damage': 1,  # Assuming damage is fixed at 1 for now
+                    'damage': weapon_attributes['dmg'],  # Assuming damage is fixed at 1 for now
                     'min': weapon_attributes['min'],
                     'sht': weapon_attributes['sht'],
                     'med': weapon_attributes['med'],
                     'lng': weapon_attributes['lng'],
+                    'dmg': weapon_attributes['dmg'],
+                    'slots': weapon_attributes['slots']
                 })
 
     return weapon_details

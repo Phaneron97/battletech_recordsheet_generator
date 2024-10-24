@@ -8,7 +8,7 @@ layout_info = {
     },
     "walking": {
         "x": 90,
-        "y": 172,
+        "y": 171,
         "font": "Eurostile",
         "size": 10,
         "margin": 1

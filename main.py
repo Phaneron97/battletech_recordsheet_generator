@@ -10,10 +10,6 @@ weapon_data = load_weapon_data('weapons.csv')
 # Extract weapon details from mech_data
 weapon_details = extract_weapon_details(mech_data["weapons"], weapon_data)
 
-# Output weapon details for debugging
-for weapon in weapon_details:
-    print(weapon)
-
 output_filled_pdf = "pdfs/filled_record_sheet.pdf"
 template_pdf = "pdfs/blank_record_sheet.pdf"
 

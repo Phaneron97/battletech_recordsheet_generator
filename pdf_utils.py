@@ -84,7 +84,7 @@ def create_filled_pdf(mech_data, layout_info, output_filename, template_filename
     x_med = 215
     x_lng = 231
 
-    c.setFont("Eurostile", 8)  # Set font for weapon details
+    c.setFont("Eurostile", 9)  # Set font for weapon details
     for weapon in weapon_details:
         c.drawString(x_quantity, start_y, str(weapon['quantity']))
         c.drawString(x_name, start_y, weapon['name'])

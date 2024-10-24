@@ -12,7 +12,7 @@ from armor_utils import add_empty_armor_diagram, add_armor_points
 pdfmetrics.registerFont(TTFont('EurostileBold', 'fonts/EurostileBold.ttf'))
 pdfmetrics.registerFont(TTFont('Eurostile', 'fonts/Eurostile.ttf'))
 
-def create_filled_pdf(mech_data, layout_info, output_filename, template_filename):
+def create_filled_pdf(mech_data, layout_info, output_filename, template_filename, weapon_details):
     # Ensure the output directory exists
     output_dir = os.path.dirname(output_filename)
     if not os.path.exists(output_dir):
@@ -31,9 +31,6 @@ def create_filled_pdf(mech_data, layout_info, output_filename, template_filename
     # Create a new PDF to add text and images
     c = canvas.Canvas(temp_filename, pagesize=letter)
 
-    # Draw the grid first (if needed)
-    # draw_grid(c)
-    
     # Add each item from the mech_data to the canvas using the layout_info
     for key, value in mech_data.items():
         if key in layout_info:
@@ -74,6 +71,32 @@ def create_filled_pdf(mech_data, layout_info, output_filename, template_filename
     # Add armor points to the armor diagram
     add_armor_points(c, layout_info["armor_diagram"], mech_data["armor_points"])
 
+    # Add weapon details below each other
+    # Add weapon details below each other in columns
+    start_y = 560
+    x_quantity = 48
+    x_name = 60
+    x_location = 118
+    x_heat = 134
+    x_damage = 148
+    x_min = 185
+    x_sht = 199
+    x_med = 215
+    x_lng = 231
+
+    c.setFont("Eurostile", 8)  # Set font for weapon details
+    for weapon in weapon_details:
+        c.drawString(x_quantity, start_y, str(weapon['quantity']))
+        c.drawString(x_name, start_y, weapon['name'])
+        c.drawString(x_location, start_y, weapon['location'])
+        c.drawString(x_heat, start_y, str(weapon['heat']))
+        c.drawString(x_damage, start_y, str(weapon['damage']))
+        c.drawString(x_min, start_y, str(weapon['min']))
+        c.drawString(x_sht, start_y, str(weapon['sht']))
+        c.drawString(x_med, start_y, str(weapon['med']))
+        c.drawString(x_lng, start_y, str(weapon['lng']))
+        start_y -= 11  # Move down for the next weapon
+
     # Save the canvas
     c.save()
 
@@ -95,3 +118,4 @@ def create_filled_pdf(mech_data, layout_info, output_filename, template_filename
 
     # Clean up the temporary file
     os.remove(temp_filename)
+

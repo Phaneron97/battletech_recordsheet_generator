@@ -6,13 +6,35 @@ layout_info = {
         "size": 10,
         "margin": 1
     },
+    "walking": {
+        "x": 90,
+        "y": 172,
+        "font": "Eurostile",
+        "size": 10,
+        "margin": 1
+    },
+    "running": {
+        "x": 90,
+        "y": 182,
+        "font": "Eurostile",
+        "size": 10,
+        "margin": 1
+    },
+    "jumping": {
+        "x": 90,
+        "y": 192,
+        "font": "Eurostile",
+        "size": 10,
+        "margin": 1
+    },
     "tonnage": {
-        "x": 190,
+        "x": 187,
         "y": 160,
         "font": "Eurostile",
         "size": 10,
         "margin": 1
     },
+
     "mech_image": {
         "x": 249,
         "y": 198,
@@ -107,7 +129,7 @@ layout_info = {
             "margin": 1
         },
         "rear_right": {
-            "x": 308,
+            "x": 508,
             "y": 337,
             "width": 20,
             "height": 30,
@@ -120,6 +142,9 @@ layout_info = {
 mech_data = {
     "type": "BattleMaster BLR-1G",
     "tonnage": "85",
+    "walking": "3",
+    "running": "5",
+    "jumping": "0",
     "armor_points": {
         "head": 9,
         "center_torso": 9,
@@ -132,5 +157,20 @@ mech_data = {
         "rear_center": 5,
         "rear_left": 4,
         "rear_right": 4
+    },
+    "weapons": {
+        "head": {
+            "Small_Laser": 1
+        },
+        "left_torso": {
+            "PPC": 1,
+            "Medium_laser": 1
+        },
+        "right_torso": {
+            "LRM_5": 1
+        },
+        "left_arm": {
+            "Medium_laser": 2
+        }
     }
 }

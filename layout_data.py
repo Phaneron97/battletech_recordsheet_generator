@@ -42,6 +42,13 @@ layout_info = {
         "height": 202,
         "margin": 1
     },
+    "weapons_and_equipment_inv": {
+        "x": 100,
+        "y": 100,
+        "width": 150,
+        "height": 150,
+        "margin": 1
+    },
     "armor_diagram": {
         "x": 396,
         "y": 78,

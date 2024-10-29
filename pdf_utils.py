@@ -66,7 +66,9 @@ def create_filled_pdf(mech_data, layout_info, output_filename, template_filename
                             width=image_info['width'], height=image_info['height'])
 
     # Add the empty armor diagram
-    add_empty_armor_diagram(c, layout_info["armor_diagram"])
+    add_empty_armor_diagram(c, layout_info["armor_diagram"], "armor_diagram_empty.png")
+
+    add_empty_armor_diagram(c, layout_info['weapons_and_equipment_inv'], "empty_weapons_and_equipment_inv.png")
 
     # Add armor points to the armor diagram
     add_armor_points(c, layout_info["armor_diagram"], mech_data["armor_points"])

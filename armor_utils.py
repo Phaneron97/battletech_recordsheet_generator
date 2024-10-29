@@ -3,9 +3,9 @@ from reportlab.lib.utils import ImageReader
 import os
 import math
 
-def add_empty_armor_diagram(c, armor_diagram_info):    
+def add_empty_armor_diagram(c, armor_diagram_info, image_name):    
     # Print empty armor diagram
-    image_path = os.path.join("sheet_images", "armor_diagram_empty.png")
+    image_path = os.path.join("sheet_images", image_name)
     if os.path.exists(image_path):
         c.drawImage(ImageReader(image_path), armor_diagram_info['x'], letter[1] - armor_diagram_info['y'] - armor_diagram_info['height'], 
                     width=armor_diagram_info['width'], height=armor_diagram_info['height'])

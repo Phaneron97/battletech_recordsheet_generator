@@ -3,7 +3,7 @@ from reportlab.lib.utils import ImageReader
 import os
 import math
 
-def add_empty_armor_diagram(c, armor_diagram_info, image_name):    
+def add_placeholder_diagram(c, armor_diagram_info, image_name):    
     # Print empty armor diagram
     image_path = os.path.join("sheet_images", image_name)
     if os.path.exists(image_path):

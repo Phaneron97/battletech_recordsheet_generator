@@ -12,7 +12,58 @@ from armor_utils import add_placeholder_diagram, add_armor_points
 pdfmetrics.registerFont(TTFont('EurostileBold', 'fonts/EurostileBold.ttf'))
 pdfmetrics.registerFont(TTFont('Eurostile', 'fonts/Eurostile.ttf'))
 
-def create_filled_pdf(mech_data, layout_info, output_filename, template_filename, weapon_details):
+def set_text_from_layout_data(c, mech_data, layout_data):
+    """Draws mech data onto the PDF canvas, including both top-level and nested data items."""
+    for key, data in mech_data.items():
+        if key in layout_data:
+            info = layout_data[key]
+            if isinstance(data, dict):
+                # Handle nested dictionaries (e.g., movement points)
+                for sub_key, sub_value in data.items():
+                    if sub_key in layout_data[key]:
+                        sub_info = layout_data[key][sub_key]
+                        c.setFont(sub_info['font'], sub_info['size'])
+                        c.drawString(sub_info['x'], letter[1] - sub_info['y'], str(sub_value))
+            else:
+                # Handle top-level values (e.g., type and tonnage)
+                c.setFont(info['font'], info['size'])
+                c.drawString(info['x'], letter[1] - info['y'], str(data))
+
+def add_mech_image(c, mech_type, image_info, image_folder="mech_images"):
+    """Adds a mech image to the PDF canvas, cropping and scaling it to fit the specified dimensions."""
+    image_path = os.path.join(image_folder, f"{mech_type}.webp")
+    if os.path.exists(image_path):
+        with Image.open(image_path) as img:
+            img_width, img_height = img.size
+            aspect_ratio = image_info['width'] / image_info['height']
+            new_width = img_width
+            new_height = int(img_width / aspect_ratio)
+
+            # Adjust dimensions to maintain the aspect ratio
+            if new_height > img_height:
+                new_height = img_height
+                new_width = int(img_height * aspect_ratio)
+
+            # Calculate cropping box to center the image
+            left = (img_width - new_width) / 2
+            top = (img_height - new_height) / 2
+            img_cropped = img.crop((left, top, left + new_width, top + new_height))
+
+            # Draw the cropped image on the canvas
+            img_cropped_reader = ImageReader(img_cropped)
+            c.drawImage(
+                img_cropped_reader,
+                image_info['x'],
+                letter[1] - image_info['y'] - image_info['height'],
+                width=image_info['width'],
+                height=image_info['height']
+            )
+    else:
+        print(f"Image not found for mech type '{mech_type}' at '{image_path}'")
+
+
+
+def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filename, weapon_details):
     # Ensure the output directory exists
     output_dir = os.path.dirname(output_filename)
     if not os.path.exists(output_dir):
@@ -22,8 +73,6 @@ def create_filled_pdf(mech_data, layout_info, output_filename, template_filename
     if os.path.exists(output_filename):
         print(f"Deleting old file: {output_filename}")
         os.remove(output_filename)
-    else:
-        print(f"File {output_filename} does not exist, creating a new one.")
 
     # Temporary filename for intermediate content
     temp_filename = "temp_content.pdf"
@@ -31,50 +80,26 @@ def create_filled_pdf(mech_data, layout_info, output_filename, template_filename
     # Create a new PDF to add text and images
     c = canvas.Canvas(temp_filename, pagesize=letter)
 
-    # Add each item from the mech_data to the canvas using the layout_info
-    for key, value in mech_data.items():
-        if key in layout_info:
-            data = layout_info[key]
-            c.setFont(data['font'], data['size'])
-            c.drawString(data['x'], letter[1] - data['y'], value)  # Adjust y-coordinate for reportlab origin
-
-    # Add the mech image
-    mech_type = mech_data.get("type")
+    # Get custom mech
+    custom_mech_info = custom_mech["mech_data"]
+    set_text_from_layout_data(c, custom_mech["mech_data"], custom_pdf["mech_data"])
+        
+    # Add custom mech image
+    mech_type = custom_mech_info.get("type")
     if mech_type:
-        image_info = layout_info["mech_image"]
-        image_path = os.path.join("mech_images", f"{mech_type}.webp")
-        if os.path.exists(image_path):
-            with Image.open(image_path) as img:
-                # Crop the image to the required aspect ratio
-                img_width, img_height = img.size
-                aspect_ratio = image_info['width'] / image_info['height']
-                new_width = img_width
-                new_height = int(img_width / aspect_ratio)
+        add_mech_image(c, mech_type, custom_pdf["mech_image"])
 
-                if new_height > img_height:
-                    new_height = img_height
-                    new_width = int(img_height * aspect_ratio)
+    # Add the placeholder diagrams for armor and weapons
+    add_placeholder_diagram(c, custom_pdf["armor_diagram"], "armor_diagram_empty.png")
+    add_placeholder_diagram(c, custom_pdf["structure_diagram"], "structure_diagram_empty.png")
+    add_placeholder_diagram(c, custom_pdf["mech_data"]["weapons_and_equipment_inv_empty_placeholder"], "empty_weapons_and_equipment_inv.png")
 
-                left = (img_width - new_width) / 2
-                top = (img_height - new_height) / 2
-                right = (img_width + new_width) / 2
-                bottom = (img_height + new_height) / 2
+    # Add armor points
+    add_armor_points(c, custom_pdf["armor_diagram"], custom_mech["armor_points"])
+    add_armor_points(c, custom_pdf["structure_diagram"], custom_mech["structure_points"])
 
-                img_cropped = img.crop((left, top, right, bottom))
-                img_cropped_reader = ImageReader(img_cropped)
-                c.drawImage(img_cropped_reader, image_info['x'], letter[1] - image_info['y'] - image_info['height'], 
-                            width=image_info['width'], height=image_info['height'])
-
-    # Add the empty armor diagram
-    add_placeholder_diagram(c, layout_info["armor_diagram"], "armor_diagram_empty.png")
-
-    add_placeholder_diagram(c, layout_info["weapons_and_equipment_inv"], "empty_weapons_and_equipment_inv.png")
-
-    # Add armor points to the armor diagram
-    add_armor_points(c, layout_info["armor_diagram"], mech_data["armor_points"])
-
-    # Add weapon details below each other in columns
-    start_y = 560
+    # Add weapons and equipment
+    start_y = custom_pdf["mech_data"]["weapons_and_equipment_inv_text"]["y"]
     x_quantity = 48
     x_name = 60
     x_location = 118
@@ -98,6 +123,9 @@ def create_filled_pdf(mech_data, layout_info, output_filename, template_filename
         c.drawString(x_lng, start_y, str(weapon['lng']))
         start_y -= 11  # Move down for the next weapon
 
+    # Add tech base checkmark
+    add_tech_base_checkmark(c, custom_mech_info.get("tech_base", "IS"), custom_pdf["tech_base_checkmark"])
+
     # Save the canvas
     c.save()
 
@@ -120,3 +148,12 @@ def create_filled_pdf(mech_data, layout_info, output_filename, template_filename
     # Clean up the temporary file
     os.remove(temp_filename)
 
+def add_tech_base_checkmark(c, tech_base, tech_base_checkmark):
+    """Draws a checkmark for the tech base (IS or Clan) based on tech_base value."""
+    checkmark_image = "sheet_images/checkmark.png"
+    # Get the position based on tech_base
+    pos = tech_base_checkmark.get(tech_base, tech_base_checkmark["IS"])
+
+    # Draw the checkmark image at the specified position
+    if os.path.exists(checkmark_image):
+        c.drawImage(ImageReader(checkmark_image), pos["x"], letter[1] - pos["y"], width=6, height=6)

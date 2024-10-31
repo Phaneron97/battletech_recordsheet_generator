@@ -11,7 +11,7 @@ import os
 pdfmetrics.registerFont(TTFont('EurostileBold', 'fonts/EurostileBold.ttf'))
 pdfmetrics.registerFont(TTFont('Eurostile', 'fonts/Eurostile.ttf'))
 
-def create_filled_pdf(mech_data, layout_info, output_filename, template_filename):
+def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filename):
     # Delete the existing filled_record_sheet.pdf if it exists
     if os.path.exists(output_filename):
         os.remove(output_filename)
@@ -22,17 +22,17 @@ def create_filled_pdf(mech_data, layout_info, output_filename, template_filename
     # Create a new PDF to add text and images
     c = canvas.Canvas(temp_filename, pagesize=letter)
     
-    # Add each item from the mech_data to the canvas using the layout_info
-    for key, value in mech_data.items():
-        if key in layout_info:
-            data = layout_info[key]
+    # Add each item from the custom_mech to the canvas using the custom_pdf
+    for key, value in custom_mech.items():
+        if key in custom_pdf:
+            data = custom_pdf[key]
             c.setFont(data['font'], data['size'])
             c.drawString(data['x'], letter[1] - data['y'], value)  # Adjust y-coordinate for reportlab origin
 
     # Add the mech image
-    mech_type = mech_data.get("type")
+    mech_type = custom_mech.get("type")
     if mech_type:
-        image_info = layout_info["mech_image"]
+        image_info = custom_pdf["mech_image"]
         image_path = os.path.join("mech_images", f"{mech_type}.webp")
         if os.path.exists(image_path):
             with Image.open(image_path) as img:
@@ -57,10 +57,10 @@ def create_filled_pdf(mech_data, layout_info, output_filename, template_filename
                             width=image_info['width'], height=image_info['height'])
 
     # Add the empty armor diagram
-    # add_empty_armor_diagram(c, layout_info["armor_diagram"])
+    # add_empty_armor_diagram(c, custom_pdf["armor_diagram"])
 
     # Add armor points to the armor diagram
-    add_armor_points(c, layout_info["armor_diagram"], mech_data["armor_points"])
+    add_armor_points(c, custom_pdf["armor_diagram"], custom_mech["armor_points"])
 
     c.save()
     
@@ -111,7 +111,7 @@ def add_armor_points(c, armor_diagram_info, armor_points):
             draw_circles(comp_info['x'], letter[1] - comp_info['y'], comp_info['width'], comp_info['height'], points)
 
 # Example dictionaries
-layout_info = {
+custom_pdf = {
     "type": {
         "x": 70.0,
         "y": 147,
@@ -162,7 +162,7 @@ layout_info = {
     }
 }
 
-mech_data = {
+custom_mech = {
     "type": "BattleMaster BLR-1G",
     "tonnage": "85",
     "armor_points": {
@@ -175,4 +175,4 @@ mech_data = {
 
 output_filled_pdf = "filled_record_sheet.pdf"
 template_pdf = "blank_record_sheet.pdf"
-create_filled_pdf(mech_data, layout_info, output_filled_pdf, template_pdf)
+create_filled_pdf(custom_mech, custom_pdf, output_filled_pdf, template_pdf)

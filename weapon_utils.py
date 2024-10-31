@@ -1,13 +1,13 @@
 import csv
-from collections import defaultdict
 
 # Function to load weapon data from a CSV file
 def load_weapon_data(csv_filename):
+    """Loads weapon data from a CSV file into a dictionary for quick lookup."""
     weapon_data = {}
     with open(csv_filename, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            # Convert Name to lowercase and remove underscores
+            # Normalize the name for consistent lookup
             name = row['Name'].lower().replace('_', '')
             weapon_data[name] = {
                 'min': str(row['min']),
@@ -23,11 +23,9 @@ def load_weapon_data(csv_filename):
             }
     return weapon_data
 
-# Function to extract weapon details for the mech
-def extract_weapon_details(weapons, weapon_data):
-    weapon_details = []
-    
-    # Define a mapping of mech locations to weapon locations
+# Function to map mech locations to abbreviations
+def map_location(location):
+    """Maps mech component locations to abbreviated labels used in PDF layout."""
     location_mapping = {
         'head': 'HD',
         'left_torso': 'LT',
@@ -35,24 +33,38 @@ def extract_weapon_details(weapons, weapon_data):
         'left_arm': 'LA',
         'right_arm': 'RA'
     }
+    return location_mapping.get(location, 'Unknown')
+
+# Function to format a weapon's attributes into a dictionary entry for the PDF
+def format_weapon_detail(weapon_name, quantity, location, weapon_attributes):
+    """Formats weapon data for insertion into PDF layout, including location and quantity."""
+    return {
+        'quantity': quantity,
+        'name': weapon_name,
+        'location': map_location(location),
+        'heat': weapon_attributes['ht'],
+        'damage': weapon_attributes['dmg'],
+        'min': weapon_attributes['min'],
+        'sht': weapon_attributes['sht'],
+        'med': weapon_attributes['med'],
+        'lng': weapon_attributes['lng'],
+        'slots': weapon_attributes['slots']
+    }
+
+# Function to extract weapon details for the mech
+def extract_weapon_details(weapons, weapon_data):
+    """Extracts and formats weapon details for each mech component from weapon data."""
+    weapon_details = []
 
     for location, weapon_info in weapons.items():
         for weapon_name, quantity in weapon_info.items():
-            # Get the corresponding weapon attributes from the weapon data
-            if weapon_name in weapon_data:
-                weapon_attributes = weapon_data[weapon_name]
-                weapon_details.append({
-                    'quantity': quantity,
-                    'name': weapon_name,
-                    'location': location_mapping.get(location, 'Unknown'),
-                    'heat': weapon_attributes['ht'],
-                    'damage': weapon_attributes['dmg'],  # Assuming damage is fixed at 1 for now
-                    'min': weapon_attributes['min'],
-                    'sht': weapon_attributes['sht'],
-                    'med': weapon_attributes['med'],
-                    'lng': weapon_attributes['lng'],
-                    'dmg': weapon_attributes['dmg'],
-                    'slots': weapon_attributes['slots']
-                })
-
+            # Lookup weapon attributes, ensuring name consistency with loaded data
+            normalized_name = weapon_name.lower().replace('_', '')
+            if normalized_name in weapon_data:
+                weapon_attributes = weapon_data[normalized_name]
+                # Add formatted weapon detail to the list
+                weapon_details.append(format_weapon_detail(normalized_name, quantity, location, weapon_attributes))
+            else:
+                print(f"Warning: {weapon_name} not found in weapon data.")
+                
     return weapon_details

@@ -7,10 +7,71 @@ from reportlab.lib.utils import ImageReader
 from PIL import Image
 import os
 from armor_utils import add_placeholder_diagram, add_armor_points
+import math
+import csv
 
 # Register the custom fonts
 pdfmetrics.registerFont(TTFont('EurostileBold', 'fonts/EurostileBold.ttf'))
 pdfmetrics.registerFont(TTFont('Eurostile', 'fonts/Eurostile.ttf'))
+
+# Load weapon data from CSV
+def load_weapon_data(csv_filename):
+    weapon_data = {}
+    with open(csv_filename, mode='r', newline='') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            weapon_name = row["Name"].lower().replace(" ", "_")
+            weapon_data[weapon_name] = {
+                "damage": int(row["Dmg"]),
+                "heat": int(row["Ht"])
+            }
+    return weapon_data
+
+# Calculate Battle Value (BV)
+def calculate_battle_value(custom_mech, weapon_data):
+    def calculate_armor_factor(armor_points, armor_type_modifier=1.0):
+        total_armor = sum(armor_points.values())
+        return total_armor * 2.5 * armor_type_modifier
+
+    def calculate_internal_structure_points(structure_points, structure_type_modifier=1.0, engine_modifier=1.0):
+        total_structure_points = sum(structure_points.values())
+        return total_structure_points * 1.5 * structure_type_modifier * engine_modifier
+
+    # Defensive Battle Rating (DBR)
+    armor_points = custom_mech["armor_points"]
+    structure_points = custom_mech["structure_points"]
+
+    armor_factor = calculate_armor_factor(armor_points)
+    structure_factor = calculate_internal_structure_points(structure_points)
+    mech_tonnage = int(custom_mech["mech_data"]["tonnage"])
+    gyro_modifier = 0.5
+    gyro_bv = mech_tonnage * gyro_modifier
+    defensive_battle_rating = (armor_factor + structure_factor + gyro_bv) * 1.2
+
+    # Offensive Battle Rating (OBR)
+    weapon_bv_total = 0
+    for location, weapons in custom_mech["weapons"].items():
+        for weapon_name, quantity in weapons.items():
+            weapon_name_key = weapon_name.lower().replace(" ", "_")
+            if weapon_name_key in weapon_data:
+                damage = weapon_data[weapon_name_key]["damage"]
+                heat = weapon_data[weapon_name_key]["heat"]
+                weapon_bv = damage * heat
+                weapon_bv_total += weapon_bv * quantity
+
+    # Speed Factor based on movement points
+    movement_points = custom_mech["mech_data"]["movement_points"]
+    running_speed = int(movement_points["running"])
+    speed_factor = running_speed / 5
+
+    offensive_battle_rating = weapon_bv_total * speed_factor
+
+    # Final BV Calculation
+    total_bv = defensive_battle_rating + offensive_battle_rating
+    final_bv = math.ceil(total_bv)
+
+    return final_bv
+
 
 def set_text_from_layout_data(c, mech_data, layout_data):
     """Draws mech data onto the PDF canvas, including both top-level and nested data items."""
@@ -61,7 +122,15 @@ def add_mech_image(c, mech_type, image_info, image_folder="mech_images"):
     else:
         print(f"Image not found for mech type '{mech_type}' at '{image_path}'")
 
+def add_tech_base_checkmark(c, tech_base, tech_base_checkmark):
+    """Draws a checkmark for the tech base (IS or Clan) based on tech_base value."""
+    checkmark_image = "sheet_images/checkmark.png"
+    # Get the position based on tech_base
+    pos = tech_base_checkmark.get(tech_base, tech_base_checkmark["IS"])
 
+    # Draw the checkmark image at the specified position
+    if os.path.exists(checkmark_image):
+        c.drawImage(ImageReader(checkmark_image), pos["x"], letter[1] - pos["y"], width=6, height=6)
 
 def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filename, weapon_details):
     # Ensure the output directory exists
@@ -126,6 +195,11 @@ def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filenam
     # Add tech base checkmark
     add_tech_base_checkmark(c, custom_mech_info.get("tech_base", "IS"), custom_pdf["tech_base_checkmark"])
 
+    # Load weapon data and calculate BV
+    weapon_csv = "weapons.csv"
+    weapon_data = load_weapon_data(weapon_csv)
+    print("Battlevalue: ", calculate_battle_value(custom_mech, weapon_data))
+
     # Save the canvas
     c.save()
 
@@ -147,13 +221,3 @@ def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filenam
 
     # Clean up the temporary file
     os.remove(temp_filename)
-
-def add_tech_base_checkmark(c, tech_base, tech_base_checkmark):
-    """Draws a checkmark for the tech base (IS or Clan) based on tech_base value."""
-    checkmark_image = "sheet_images/checkmark.png"
-    # Get the position based on tech_base
-    pos = tech_base_checkmark.get(tech_base, tech_base_checkmark["IS"])
-
-    # Draw the checkmark image at the specified position
-    if os.path.exists(checkmark_image):
-        c.drawImage(ImageReader(checkmark_image), pos["x"], letter[1] - pos["y"], width=6, height=6)

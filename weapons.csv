@@ -80,7 +80,7 @@ Clan,Missile,2.0,SRM_2AV,0,3,6,9,2,0,0
 Clan,Missile,2.0,SRM_4AIV,0,3,6,9,3,0,0
 Clan,Missile,2.5,SRM_4AV,0,3,6,9,3,0,0
 Clan,Missile,1.0,SRM_4_,0,3,6,9,3,0,0
-Clan,Missile,1.5,SRM_6,0,3,6,9,4,0,0
+Clan,Missile,1.5,SRM_6,0,3,6,9,4,2,2
 Clan,Missile,2.5,SRM_6AIV,0,3,6,9,4,0,0
 Clan,Missile,3.0,SRM_6AV,0,3,6,9,4,0,0
 Clan,Missile,1.0,SSRM_2,0,4,8,12,2,0,0

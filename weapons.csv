@@ -88,7 +88,7 @@ Clan,Missile,2.0,SSRM_4,0,4,8,12,3,0,0
 Clan,Missile,3.0,SSRM_6,0,4,8,12,4,0,0
 IS,Balistic,12.0,AC10,0,5,10,15,3,10,7
 IS,Balistic,6.0,AC2,4,8,16,24,1,2,3
-IS,Balistic,14.0,AC20,0,3,6,9,7,0,0
+IS,Balistic,14.0,AC20,0,3,6,9,7,20,0
 IS,Balistic,8.0,AC5,3,6,12,18,1,5,4
 IS,Balistic,0.5,Grenade_L_V,0,0,0,1,1,0,0
 IS,Balistic,18.0,Heavy_Gauss,4,6,13,20,2,0,0
@@ -167,7 +167,7 @@ IS,Missile,3.0,NLRM_5,3,7,14,21,2,0,0
 IS,Missile,0.5,Rocket_10,0,5,11,18,3,0,0
 IS,Missile,1.0,Rocket_15,0,4,9,15,4,0,0
 IS,Missile,1.5,Rocket_20,0,3,7,12,5,0,0
-IS,Missile,1.0,SRM_2,0,3,6,9,2,2,1
+IS,Missile,1.0,SRM_2,0,3,6,9,2,4,1
 IS,Missile,2.0,SRM_4,0,3,6,9,3,8,1
 IS,Missile,3.0,SRM_6,0,3,6,9,4,12,2
 IS,Missile,7.0,Thunderbolt_10,5,6,12,18,5,0,0

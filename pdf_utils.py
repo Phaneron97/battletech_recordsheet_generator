@@ -31,6 +31,7 @@ def load_weapon_data(csv_filename):
 def calculate_battle_value(custom_mech, weapon_data):
     def calculate_armor_factor(armor_points, armor_type_modifier=1.0):
         total_armor = sum(armor_points.values())
+        print("total armor = ", total_armor)
         return total_armor * 2.5 * armor_type_modifier
 
     def calculate_internal_structure_points(structure_points, structure_type_modifier=1.0, engine_modifier=1.0):
@@ -53,11 +54,11 @@ def calculate_battle_value(custom_mech, weapon_data):
     for location, weapons in custom_mech["weapons"].items():
         for weapon_name, quantity in weapons.items():
             weapon_name_key = weapon_name.lower().replace(" ", "_")
-            if weapon_name_key in weapon_data:
+            if weapon_name_key in weapon_data:                
                 damage = weapon_data[weapon_name_key]["damage"]
                 heat = weapon_data[weapon_name_key]["heat"]
                 weapon_bv = damage * heat
-                weapon_bv_total += weapon_bv * quantity
+                weapon_bv_total += weapon_bv * quantity  # Factor in quantity of each weapon
 
     # Speed Factor based on movement points
     movement_points = custom_mech["mech_data"]["movement_points"]

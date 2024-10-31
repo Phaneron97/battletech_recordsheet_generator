@@ -318,5 +318,13 @@ custom_mech = {
             "left_leg": 2,
             "center_torso": 13
         }
+    },
+    "ammunition": {
+        "left_torso": {
+            "SRM": 1
+        },
+        "right_torso": {
+            "SRM0": 1
+        }
     }
 }

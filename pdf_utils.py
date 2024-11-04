@@ -29,36 +29,40 @@ def load_weapon_data(csv_filename):
 
 # Calculate Battle Value (BV)
 def calculate_battle_value(custom_mech, weapon_data):
+    """
+    Calculates the Battle Value (BV) of a mech, considering armor, structure, weapons,
+    ammunition, and movement points.
+    """
+
     def calculate_armor_factor(armor_points, armor_type_modifier=1.0):
         total_armor = sum(armor_points.values())
-        print("total armor = ", total_armor)
         return total_armor * 2.5 * armor_type_modifier
 
     def calculate_internal_structure_points(structure_points, structure_type_modifier=1.0, engine_modifier=1.0):
         total_structure_points = sum(structure_points.values())
         return total_structure_points * 1.5 * structure_type_modifier * engine_modifier
 
-    # Defensive Battle Rating (DBR)
+    # Step 1: Defensive Battle Rating (DBR)
     armor_points = custom_mech["armor_points"]
     structure_points = custom_mech["structure_points"]
+    mech_tonnage = int(custom_mech["mech_data"]["tonnage"])
 
     armor_factor = calculate_armor_factor(armor_points)
     structure_factor = calculate_internal_structure_points(structure_points)
-    mech_tonnage = int(custom_mech["mech_data"]["tonnage"])
     gyro_modifier = 0.5
     gyro_bv = mech_tonnage * gyro_modifier
     defensive_battle_rating = (armor_factor + structure_factor + gyro_bv) * 1.2
 
-    # Offensive Battle Rating (OBR)
+    # Step 2: Offensive Battle Rating (OBR)
     weapon_bv_total = 0
     for location, weapons in custom_mech["weapons"].items():
         for weapon_name, quantity in weapons.items():
             weapon_name_key = weapon_name.lower().replace(" ", "_")
-            if weapon_name_key in weapon_data:                
+            if weapon_name_key in weapon_data:
                 damage = weapon_data[weapon_name_key]["damage"]
                 heat = weapon_data[weapon_name_key]["heat"]
                 weapon_bv = damage * heat
-                weapon_bv_total += weapon_bv * quantity  # Factor in quantity of each weapon
+                weapon_bv_total += weapon_bv * quantity  # Consider weapon quantity
 
     # Speed Factor based on movement points
     movement_points = custom_mech["mech_data"]["movement_points"]
@@ -67,12 +71,27 @@ def calculate_battle_value(custom_mech, weapon_data):
 
     offensive_battle_rating = weapon_bv_total * speed_factor
 
-    # Final BV Calculation
-    total_bv = defensive_battle_rating + offensive_battle_rating
+    # Step 3: Ammunition Penalty (per ton of explosive ammo in critical locations or without CASE protection)
+    ammo_penalty = 0
+    critical_locations = ["center_torso", "head", "left_leg", "right_leg"]
+
+    for location, ammo in custom_mech.get("ammunition", {}).items():
+        for ammo_type, tonnage in ammo.items():
+            # Penalty applies if located in critical locations or lacks CASE
+            if location in critical_locations or not custom_mech.get("case_protection", {}).get(location, False):
+                ammo_penalty += 15 * tonnage  # 15 points per ton of explosive ammo
+
+    # Final BV Calculation: Total up DBR, OBR, and subtract ammo penalty
+    total_bv = max(1, defensive_battle_rating + offensive_battle_rating - ammo_penalty)  # Ensure BV is at least 1
     final_bv = math.ceil(total_bv)
 
-    return final_bv
+    # Print Debug Information
+    print("Defensive Battle Rating:", defensive_battle_rating)
+    print("Offensive Battle Rating:", offensive_battle_rating)
+    print("Ammunition Penalty:", ammo_penalty)
+    print("Total Battle Value:", final_bv)
 
+    return final_bv
 
 def set_text_from_layout_data(c, mech_data, layout_data):
     """Draws mech data onto the PDF canvas, including both top-level and nested data items."""

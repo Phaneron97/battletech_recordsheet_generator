@@ -297,10 +297,10 @@ custom_mech = {
         "head": {
         },
         "left_torso": {
-            "Medium_laser": 3
+            "Medium_Laser": 3
         },
         "right_torso": {
-            "Medium_laser": 3,
+            "Medium_Laser": 3,
             "SRM_6": 1
         },
         "left_arm": {

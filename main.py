@@ -5,7 +5,8 @@ from layout_data import custom_pdf, custom_mech
 from weapon_utils import load_weapon_data, extract_weapon_details
 
 # Load weapon data from CSV
-weapon_data = load_weapon_data('weapons.csv')
+weapon_data = load_weapon_data('weapons_and_ammo.csv')
+# weapon_data.head()
 
 # Extract weapon details from custom_mech
 weapon_details = extract_weapon_details(custom_mech["weapons"], weapon_data)

@@ -1,0 +1,8 @@
+tech base,weapon type,Name,Dmg,AmmoTon
+IS,Missile,LRM5,1,24
+IS,Missile,LRM10,1,12
+IS,Missile,LRM15,1,8
+IS,Missile,SRM2,2,50
+IS,Missile,SRM4,2,25
+IS,Missile,SRM6,2,15
+IS,Ballistic,AC5,5,20

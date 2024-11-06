@@ -166,7 +166,7 @@ custom_pdf = {
         "margin": 1,
         "head": {
             "x": 475,
-            "y": 96,
+            "y": 400,
             "width": 20,
             "height": 20,
             "rotation": 0,
@@ -174,7 +174,7 @@ custom_pdf = {
         },
         "center_torso": {
             "x": 475,
-            "y": 130,
+            "y": 450,
             "width": 20,
             "height": 80,
             "rotation": 0,
@@ -182,7 +182,7 @@ custom_pdf = {
         },
         "left_torso": {
             "x": 440,
-            "y": 115,
+            "y": 450,
             "width": 20,
             "height": 75,
             "rotation": 3,
@@ -190,7 +190,7 @@ custom_pdf = {
         },
         "right_torso": {
             "x": 510,
-            "y": 115,
+            "y": 450,
             "width": 20,
             "height": 75,
             "rotation": -3,
@@ -198,7 +198,7 @@ custom_pdf = {
         },
         "left_arm": {
             "x": 415,
-            "y": 110,
+            "y": 450,
             "width": 15,
             "height": 80,
             "rotation": -6,  
@@ -206,7 +206,7 @@ custom_pdf = {
         },
         "right_arm": {
             "x": 541,
-            "y": 110,
+            "y": 450,
             "width": 15,
             "height": 80,
             "rotation": 6,  
@@ -214,7 +214,7 @@ custom_pdf = {
         },
         "left_leg": {
             "x": 445,
-            "y": 205,
+            "y": 600,
             "width": 18,
             "height": 100,
             "rotation": -12,  
@@ -222,34 +222,10 @@ custom_pdf = {
         },
         "right_leg": {
             "x": 505,
-            "y": 205,
+            "y": 600,
             "width": 18,
             "height": 100,
             "rotation": 12,  
-            "margin": 1
-        },
-        "rear_center": {
-            "x": 475,
-            "y": 327,
-            "width": 20,
-            "height": 59,
-            "rotation": 0,  
-            "margin": 1
-        },
-        "rear_left": {
-            "x": 442,
-            "y": 337,
-            "width": 20,
-            "height": 30,
-            "rotation": 0,  
-            "margin": 1
-        },
-        "rear_right": {
-            "x": 508,
-            "y": 337,
-            "width": 20,
-            "height": 30,
-            "rotation": 0,  
             "margin": 1
         }
     }
@@ -315,8 +291,7 @@ custom_mech = {
         "heatsink_locations": {
             "right_torso": 1,
             "right_leg": 2,
-            "left_leg": 2,
-            "center_torso": 13
+            "left_leg": 2
         }
     },
     "ammunition": {

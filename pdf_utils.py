@@ -152,6 +152,37 @@ def add_tech_base_checkmark(c, tech_base, tech_base_checkmark):
     if os.path.exists(checkmark_image):
         c.drawImage(ImageReader(checkmark_image), pos["x"], letter[1] - pos["y"], width=6, height=6)
 
+
+def get_engine_rating(mech_tonnage, walking_mp):
+    """See techmanual p.48 for calculation"""
+    return math.ceil(mech_tonnage * walking_mp)
+    
+
+def get_internal_heatsinks(engine_rating):
+    """calculate amount of internal heatsinks based on engine_rating, always rounds number down. returns one integer"""
+    return math.floor(engine_rating / 25)
+
+
+def get_running_mp(walking_mp):
+    """See techmanual p.48 for calculation"""
+    return math.ceil(walking_mp * 1.5)
+
+
+def get_total_jumpjet_tonnage(mech_tonnage, jumping_mp):
+    jumpjet_weight = 0
+    if mech_tonnage >= 10 and mech_tonnage <= 55:
+        jumpjet_weight = 0.5
+    elif mech_tonnage >= 10 and mech_tonnage <= 55:
+        jumpjet_weight = 1
+    elif mech_tonnage >= 90 and mech_tonnage <= 100:
+        jumpjet_weight = 2
+    else: 
+        print("something went wrong while calculating total_jumpjet_tonnage")
+    
+    total_jumpjet_tonnage = jumping_mp * jumpjet_weight
+    return total_jumpjet_tonnage
+
+
 def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filename, weapon_details):
     # Ensure the output directory exists
     output_dir = os.path.dirname(output_filename)

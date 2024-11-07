@@ -9,23 +9,35 @@ import os
 from armor_utils import add_placeholder_diagram, add_armor_points
 import math
 import csv
+import re
 
 # Register the custom fonts
 pdfmetrics.registerFont(TTFont('EurostileBold', 'fonts/EurostileBold.ttf'))
 pdfmetrics.registerFont(TTFont('Eurostile', 'fonts/Eurostile.ttf'))
 
-# Load weapon data from CSV
+# Load weapon data from CSV and clean the "Damage" and "Heat" columns
 def load_weapon_data(csv_filename):
     weapon_data = {}
+    
     with open(csv_filename, mode='r', newline='') as file:
         reader = csv.DictReader(file)
+        
         for row in reader:
-            weapon_name = row["Name"].lower().replace(" ", "_")
+            # Normalize the weapon name for consistent lookup
+            weapon_name = row["Weapon/Item"].strip().lower().replace(" ", "_")
+            
+            # Extract primary damage and heat values by removing the trailing "(x)" part if present
+            damage = re.sub(r'\s*\(.*\)$', '', row["Damage"]).strip()
+            heat = re.sub(r'\s*\(.*\)$', '', row["Heat"]).strip()
+            
+            # Convert damage and heat to integers where applicable
             weapon_data[weapon_name] = {
-                "damage": int(row["Dmg"]),
-                "heat": int(row["Ht"])
+                "damage": int(damage) if damage.isdigit() else damage,
+                "heat": int(heat) if heat.isdigit() else heat
             }
+    
     return weapon_data
+
 
 # Calculate Battle Value (BV)
 def calculate_battle_value(custom_mech, weapon_data):
@@ -34,35 +46,54 @@ def calculate_battle_value(custom_mech, weapon_data):
     ammunition, and movement points.
     """
 
+    # Step 1: Defensive Battle Rating (DBR)
     def calculate_armor_factor(armor_points, armor_type_modifier=1.0):
+        """Calculates the armor factor based on total armor points and a type modifier."""
         total_armor = sum(armor_points.values())
         return total_armor * 2.5 * armor_type_modifier
 
     def calculate_internal_structure_points(structure_points, structure_type_modifier=1.0, engine_modifier=1.0):
+        """Calculates the structure factor based on structure points, modifiers, and engine type."""
         total_structure_points = sum(structure_points.values())
         return total_structure_points * 1.5 * structure_type_modifier * engine_modifier
 
-    # Step 1: Defensive Battle Rating (DBR)
+    # Extract armor and structure data
     armor_points = custom_mech["armor_points"]
     structure_points = custom_mech["structure_points"]
     mech_tonnage = int(custom_mech["mech_data"]["tonnage"])
 
+    # Calculate factors for DBR
     armor_factor = calculate_armor_factor(armor_points)
     structure_factor = calculate_internal_structure_points(structure_points)
     gyro_modifier = 0.5
     gyro_bv = mech_tonnage * gyro_modifier
+
+    # Defensive Battle Rating (DBR)
     defensive_battle_rating = (armor_factor + structure_factor + gyro_bv) * 1.2
+
+    # Print debug information for DBR
+    print("Armor Factor:", armor_factor)
+    print("Structure Factor:", structure_factor)
+    print("Gyro BV:", gyro_bv)
+    print("Defensive Battle Rating:", defensive_battle_rating)
 
     # Step 2: Offensive Battle Rating (OBR)
     weapon_bv_total = 0
     for location, weapons in custom_mech["weapons"].items():
         for weapon_name, quantity in weapons.items():
+            # Normalize weapon name for lookup and retrieve stats
             weapon_name_key = weapon_name.lower().replace(" ", "_")
             if weapon_name_key in weapon_data:
                 damage = weapon_data[weapon_name_key]["damage"]
+
                 heat = weapon_data[weapon_name_key]["heat"]
-                weapon_bv = damage * heat
-                weapon_bv_total += weapon_bv * quantity  # Consider weapon quantity
+                weapon_bv = damage * heat  # BV calculation per weapon instance
+                print("damage", damage)
+                print("heat", heat)
+                print("weaponbv",weapon_bv)
+                
+                # Convert quantity to integer before multiplication
+                weapon_bv_total += weapon_bv * int(quantity)
 
     # Speed Factor based on movement points
     movement_points = custom_mech["mech_data"]["movement_points"]
@@ -71,27 +102,33 @@ def calculate_battle_value(custom_mech, weapon_data):
 
     offensive_battle_rating = weapon_bv_total * speed_factor
 
+    # Print debug information for OBR
+    print("Weapon BV Total:", weapon_bv_total)
+    print("Speed Factor:", speed_factor)
+    print("Offensive Battle Rating:", offensive_battle_rating)
+
     # Step 3: Ammunition Penalty (per ton of explosive ammo in critical locations or without CASE protection)
     ammo_penalty = 0
     critical_locations = ["center_torso", "head", "left_leg", "right_leg"]
 
     for location, ammo in custom_mech.get("ammunition", {}).items():
         for ammo_type, tonnage in ammo.items():
-            # Penalty applies if located in critical locations or lacks CASE
+            # Check if location is critical or lacks CASE protection
             if location in critical_locations or not custom_mech.get("case_protection", {}).get(location, False):
                 ammo_penalty += 15 * tonnage  # 15 points per ton of explosive ammo
 
-    # Final BV Calculation: Total up DBR, OBR, and subtract ammo penalty
+    # Print debug information for Ammo Penalty
+    print("Ammunition Penalty:", ammo_penalty)
+
+    # Step 4: Final BV Calculation - Total up DBR, OBR, and subtract ammo penalty
     total_bv = max(1, defensive_battle_rating + offensive_battle_rating - ammo_penalty)  # Ensure BV is at least 1
     final_bv = math.ceil(total_bv)
 
-    # Print Debug Information
-    print("Defensive Battle Rating:", defensive_battle_rating)
-    print("Offensive Battle Rating:", offensive_battle_rating)
-    print("Ammunition Penalty:", ammo_penalty)
+    # Print Final Battle Value
     print("Total Battle Value:", final_bv)
 
     return final_bv
+
 
 def set_text_from_layout_data(c, mech_data, layout_data):
     """Draws mech data onto the PDF canvas, including both top-level and nested data items."""
@@ -247,7 +284,7 @@ def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filenam
     add_tech_base_checkmark(c, custom_mech_info.get("tech_base", "IS"), custom_pdf["tech_base_checkmark"])
 
     # Load weapon data and calculate BV
-    weapon_csv = "weapons.csv"
+    weapon_csv = "weapons_and_ammo.csv"
     weapon_data = load_weapon_data(weapon_csv)
     print("Battlevalue: ", calculate_battle_value(custom_mech, weapon_data))
 

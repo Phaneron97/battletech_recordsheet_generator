@@ -1,0 +1,130 @@
+Techbase,Weapon/Item,BV,AmmoBV
+IS,ER Laser (Large),163,
+IS,ER Laser (Medium),62,
+IS,ER Laser (Small),17,
+IS,Flamer,6,
+IS,Laser (Large),123,
+IS,Laser (Medium),46,
+IS,Laser (Small),9,
+IS,PPC (Heavy),317,
+IS,PPC,176,
+IS,PPC (Light),88,
+IS,PPC (Snub-Nose),165,
+IS,PPC (Support),14,
+IS,ER PPC,228,
+IS,Plasma Rifle,210,26
+IS,Plasma Rifle (Man-Portable),12,2
+IS,Pulse Laser (Large),119,
+IS,Pulse Laser (Medium),48,
+IS,Pulse Laser (Small),12,
+IS,AC/2,37,5
+IS,AC/5,70,9
+IS,AC/10,123,15
+IS,AC/20,178,22
+IS,“Firedrake” Support Needler,2,0
+IS,Flamer (Vehicle),5,1
+IS,Gauss Rifle (Heavy),346,43§
+IS,Gauss Rifle,320,40§
+IS,Gauss Rifle (Light),159,20§
+IS,Gauss Rifle (David),7,1
+IS,Gauss Rifle (“King David”),7,1
+IS,Gauss (Grand Mauler),6,
+IS,Grenade Launcher (Automatic),1,
+IS,Grenade Launcher (Heavy),2,
+IS,LB 2-X AC,42,5
+IS,LB 5-X AC,83,10
+IS,LB 10-X AC,148,19
+IS,LB 20-X AC,237,30
+IS,Light AC/2,30,4
+IS,Light AC/5,62,8
+IS,Machine Gun (Heavy),6,1
+IS,Machine Gun,5,1
+IS,Machine Gun (Light),5,1
+IS,Mortar (Light),9,
+IS,Mortar (Heavy),17,
+IS,Nail/Rivet Gun,1,0
+IS,Recoilless Rifle (Light),12,
+IS,Recoilless Rifle (Medium),19,
+IS,Recoilless Rifle (Heavy),22,
+IS,Tsunami,6,
+IS,Rotary AC/2,118,15
+IS,Rotary AC/5,247,31
+IS,Ultra AC/2,56,7
+IS,Ultra AC/5,112,14
+IS,Ultra AC/10,210,26
+IS,Ultra AC/20,281,35
+IS,LRM-1,14/3,2
+IS,LRM-2,20/4,3
+IS,LRM-3,29/6,4
+IS,LRM-4,38/8,5
+IS,LRM-5,45/9,6
+IS,LRM-10,90/18,11
+IS,LRM-15,136/27,17
+IS,LRM-20,181/36,23
+IS,MML-3,29/6,4
+IS,MML-5,45/9,6
+IS,MML-7,67/13,8
+IS,MML-9,86/17,11
+IS,MRM-1,9/2,1
+IS,MRM-2,13/3,2
+IS,MRM-3,18/4,2
+IS,MRM-4,23/5,3
+IS,MRM-5,28/6,4
+IS,MRM-10,56/11,7
+IS,MRM-20,112/22,14
+IS,MRM-30,168/34,21
+IS,MRM-40,224/49,28
+IS,Rocket Launcher 1,2,
+IS,Rocket Launcher 2,3,
+IS,Rocket Launcher 3,4,
+IS,Rocket Launcher 4,5,
+IS,Rocket Launcher 5,6,
+IS,Rocket Launcher 10,18,
+IS,Rocket Launcher 15,23,
+IS,Rocket Launcher 20,24,
+IS,SRM-1,15/3,2
+IS,SRM-2,21/4,3
+IS,SRM-3,30/6,4
+IS,SRM-4,39/8,5
+IS,SRM-5,47/9,6
+IS,SRM-6,59/12,7
+IS,Streak SRM-2,30/6,4
+IS,Streak SRM-4,59/12,7
+IS,Streak SRM-6,89/18,11
+IS,Anti-Missile System,32†,11†
+IS,Anti-Personnel Pod (A-Pod),1,†
+IS,Anti-Battle Armor Pod (B-Pod),2,†
+IS,Artemis IV FCS,B,
+IS,Backhoe,8,
+IS,Bridge-Layer (Light),5,†
+IS,Bridge-Layer (Medium),10,†
+IS,Bridge-Layer (Heavy),20,†
+IS,Beagle Active Probe,10,†
+IS,Bulldozer,10,†
+IS,CASE C,,
+IS,C3 Computer (Master) D,,
+IS,C3 Slave D,,
+IS,Chainsaw,7,
+IS,Combine,5,
+IS,Dual Saw,9,
+IS,Guardian ECM Suite,61,†
+IS,Hatchet,(Damage x 1.5),
+IS,Heavy-Duty Pile Driver,5,
+IS,Improved C,3,Computer D
+IS,Improved Narc Launcher,75/15,0
+IS,Machine Gun Array F,,
+IS,MASC C,,
+IS,Mining Drill,6,
+IS,Narc Missile Beacon,30/6,0
+IS,Narc (Compact),16/4,0
+IS,Nail/Rivet Gun,1,0
+IS,Popup Mine,6,
+IS,Retractable Blade,(Damage x 1 725),
+IS,Rock Cutter,6,
+IS,Spot Welder,5,
+IS,Sword,(Damage x 1.725),
+IS,TAG A,,
+IS,Targeting Computer E,,
+IS,Triple-Strength Myomer C,0,
+IS,Industrial Triple-Strength Myomer C,,
+IS,Wrecking Ball,8,

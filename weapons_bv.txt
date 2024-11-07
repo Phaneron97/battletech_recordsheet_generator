@@ -1,0 +1,130 @@
+Weapon/Item,BV,AmmoBV
+ER Laser (Large) 163 —
+ER Laser (Medium) 62 —
+ER Laser (Small) 17 —
+Flamer 6 —
+Laser (Large) 123 —
+Laser (Medium) 46 —
+Laser (Small) 9 —
+PPC (Heavy) 317 —
+PPC 176 —
+PPC (Light) 88 —
+PPC (Snub-Nose) 165 —
+PPC (Support) 14 —
+ER PPC 228 —
+Plasma Rifle 210 26
+Plasma Rifle (Man-Portable) 12 2
+Pulse Laser (Large) 119 —
+Pulse Laser (Medium) 48 —
+Pulse Laser (Small) 12 —
+AC/2 37 5
+AC/5 70 9
+AC/10 123 15
+AC/20 178 22
+“Firedrake” Support Needler 2 0
+Flamer (Vehicle) 5 1
+Gauss Rifle (Heavy) 346 43§
+Gauss Rifle 320 40§
+Gauss Rifle (Light) 159 20§
+Gauss Rifle (David) 7 1
+Gauss Rifle (“King David”) 7 1
+Gauss (Grand Mauler) 6 —
+Grenade Launcher (Automatic) 1 —
+Grenade Launcher (Heavy) 2 —
+LB 2-X AC 42 5
+LB 5-X AC 83 10
+LB 10-X AC 148 19
+LB 20-X AC 237 30
+Light AC/2 30 4
+Light AC/5 62 8
+Machine Gun (Heavy) 6 1
+Machine Gun 5 1
+Machine Gun (Light) 5 1
+Mortar (Light) 9 —
+Mortar (Heavy) 17 —
+Nail/Rivet Gun 1 0
+Recoilless Rifle (Light) 12 —
+Recoilless Rifle (Medium) 19 —
+Recoilless Rifle (Heavy) 22 —
+Tsunami 6 —
+Rotary AC/2 118 15
+Rotary AC/5 247 31
+Ultra AC/2 56 7
+Ultra AC/5 112 14
+Ultra AC/10 210 26
+Ultra AC/20 281 35
+LRM-1 14/3 2
+LRM-2 20/4 3
+LRM-3 29/6 4
+LRM-4 38/8 5
+LRM-5 45/9 6
+LRM-10 90/18 11
+LRM-15 136/27 17
+LRM-20 181/36 23
+MML-3 29/6 4
+MML-5 45/9 6
+MML-7 67/13 8
+MML-9 86/17 11
+MRM-1 9/2 1
+MRM-2 13/3 2
+MRM-3 18/4 2
+MRM-4 23/5 3
+MRM-5 28/6 4
+MRM-10 56/11 7
+MRM-20 112/22 14
+MRM-30 168/34 21
+MRM-40 224/49 28
+Rocket Launcher 1 2 —
+Rocket Launcher 2 3 —
+Rocket Launcher 3 4 —
+Rocket Launcher 4 5 —
+Rocket Launcher 5 6 —
+Rocket Launcher 10 18 —
+Rocket Launcher 15 23 —
+Rocket Launcher 20 24 —
+SRM-1 15/3 2
+SRM-2 21/4 3
+SRM-3 30/6 4
+SRM-4 39/8 5
+SRM-5 47/9 6
+SRM-6 59/12 7
+Streak SRM-2 30/6 4
+Streak SRM-4 59/12 7
+Streak SRM-6 89/18 11
+Anti-Missile System 32† 11†
+Anti-Personnel Pod (A-Pod) 1† —
+Anti-Battle Armor Pod (B-Pod) 2† —
+Artemis IV FCS B —
+Backhoe 8 —
+Bridge-Layer (Light) 5† —
+Bridge-Layer (Medium) 10† —
+Bridge-Layer (Heavy) 20† —
+Beagle Active Probe 10† —
+Bulldozer 10† —
+CASE C —
+C3 Computer (Master) D —
+C3 Slave D —
+Chainsaw 7 —
+Combine 5 —
+Dual Saw 9 —
+Guardian ECM Suite 61† —
+Hatchet (Damage x 1.5) —
+Heavy-Duty Pile Driver 5 —
+Improved C 3 Computer D —
+Improved Narc Launcher 75/15 0
+Machine Gun Array F —
+MASC C —
+Mining Drill 6 —
+Narc Missile Beacon 30/6 0
+Narc (Compact) 16/4 0
+Nail/Rivet Gun 1 0
+Popup Mine 6 —
+Retractable Blade (Damage x 1.725) —
+Rock Cutter 6 —
+Spot Welder 5 —
+Sword (Damage x 1.725) —
+TAG A —
+Targeting Computer E —
+Triple-Strength Myomer C —
+Industrial Triple-Strength Myomer C —
+Wrecking Ball 8 —

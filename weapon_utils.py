@@ -44,7 +44,7 @@ def load_weapon_data(csv_filename):
                 'sht': sht_range,
                 'med': med_range,
                 'lng': lng_range,
-                'slots': row.get('P', '0')  # 'P' is assumed as equivalent to 'Slots'
+                'slots': row.get('M', '0')  # 'P' is assumed as equivalent to 'Slots'
             }
             print("weapon", weapon_data[name])
     return weapon_data

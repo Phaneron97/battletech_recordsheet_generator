@@ -1,0 +1,174 @@
+Techbase,Weapon/Item,Heat,Damage,Range,Ammo,WT,M,P,CV,SV,F,SC,DS,TechRating,PageRef,BV,AmmoBV
+Clan,A-Pods,0 (NA),**,** (NA),OS,0.5,1,NA,NA,NA,NA,NA,NA,B,204,,
+Clan,AP Gauss Rifle,1 (1),3 (3),0/3/6/9 (Short-PD),40,0.5,1,1,1,1,1,1,1,F,218,,
+Clan,AR-10 Launcher,NA (††),NA (††),NA (††),††,250,NA,NA,NA,NA,NA,NA,1,F,210,,
+Clan,ATM 12,8 (8),2/Msl (16),4/5/10/15 (Medium),5,7,5,NA,1,5,1,1,1,F,229,,
+Clan,ATM 3,2 (2),2/Msl (4),4/5/10/15 (Medium),20,1.5,2,NA,1,2,1,1,1,F,229,,
+Clan,ATM 6,4 (4),2/Msl (8),4/5/10/15 (Medium),10,3.5,3,NA,1,3,1,1,1,F,229,,
+Clan,ATM 9,6 (6),2/Msl (10),4/5/10/15 (Medium),7,5,4,NA,1,4,1,1,1,F,229,,
+Clan,Active Probe,0 (0),NA,0/0/0/5 (**),NA,1,1,1,1,1,1,1,1,E,204,,
+Clan,B-Pods,0 (NA),**,** (NA),OS,1,1,NA,1,1,NA,NA,NA,E,204,,
+Clan,Barracuda,NA (10),NA (20),NA (Extreme),30 t/Msl,90,NA,NA,NA,NA,NA,NA,1,F,210,,
+Clan,ECM Suite,0 (0),NA,0/0/0/6 (**),NA,1,1,1,1,1,1,1,1,F,213,,
+Clan,ER Large Laser,12 (12),10 (10),0/8/15/25 (Extreme),NA,4,1,1,1,1,1,1,1,F,226,,
+Clan,ER Medium Laser,5 (5),7 (7),0/5/10/15 (Medium),NA,1,1,1,1,1,1,1,1,F,226,,
+Clan,ER Micro Laser,1 (1),2 (2),0/1/2/3-4 (Short),NA,0.25,1,1,1,1,1,1,1,F,226,,
+Clan,ER Small Laser,2 (2),5 (5),0/2/4/6 (Short),NA,0.5,1,1,1,1,1,1,1,F,226,,
+Clan,Heavy Large Laser,18 (18),16 (16),0/5/10/15 (Medium),NA,4,3,NA,1,3,1,1,1,F,226,,
+Clan,Heavy Machine Gun,0 (0),3 (3),0/1/2/— (Short),100,0.5,1,1,1,1,1,1,1,C,228,,
+Clan,Heavy Medium Laser,7 (7),10 (10),0/3/6/9 (Short),NA,1,2,1,1,2,1,1,1,F,226,,
+Clan,Heavy Small Laser,3 (3),6 (6),0/1/2/3 (Short),NA,0.5,1,1,1,1,1,1,1,F,226,,
+Clan,Hyper-Assault Gauss 20,4 (4),20** (16/12/12),2/8/16/24 (Long),6,10,6,NA,1,6,1,1,1,F,219,,
+Clan,Hyper-Assault Gauss 30,6 (6),30** (24/18/18),2/8/16/24 (Long),4,13,8,NA,1,8,1,1,1,F,219,,
+Clan,Hyper-Assault Gauss 40,8 (8),40** (32/24/24),2/8/16/24 (Long),3,16,10,NA,1,10,1,1,1,F,219,,
+Clan,Killer Whale,NA (20),NA (40),NA (Extreme),50 t/Msl,150,NA,NA,NA,NA,NA,NA,1,F,210,,
+Clan,LRM 10,4 (4),1/Msl (6),0/7/14/21 (Long),12,2.5,1,1,1,1,1,1,1,F,229,,
+Clan,LRM 10 + Artemis IV,4 (4),1/Msl (8),0/7/14/21 (Long),12,3.5,2,1,1,2,1,1,1,F,206/229,,
+Clan,LRM 15,5 (5),1/Msl (9),0/7/14/21 (Long),8,3.5,2,1,1,2,1,1,1,F,229,,
+Clan,LRM 15 + Artemis IV,5 (5),1/Msl (12),0/7/14/21 (Long),8,4.5,3,1,1,3,1,1,1,F,206/229,,
+Clan,LRM 20,6 (6),1/Msl (12),0/7/14/21 (Long),6,5,4,1,1,4,1,1,1,F,229,,
+Clan,LRM 20 + Artemis IV,6 (6),1/Msl (16),0/7/14/21 (Long),6,6,5,1,1,5,1,1,1,F,206/229,,
+Clan,LRM 5,2 (2),1/Msl (3),0/7/14/21 (Long),24,1,1,1,1,1,1,1,1,F,229,,
+Clan,LRM 5 + Artemis IV,2 (2),1/Msl (4),0/7/14/21 (Long),24,2,2,1,1,2,1,1,1,F,206/229,,
+Clan,Large Pulse Laser,10 (10),10 (10),0/6/14/20 (Long),NA,6,2,NA,1,2,1,1,1,F,226,,
+Clan,Light Active Probe,0 (0),NA,0/0/0/3 (**),NA,0.5,1,1,1,1,1,1,1,F,204,,
+Clan,Light Machine Gun,0 (0),1 (1),0/2/4/6 (Short),200,0.25,1,1,1,1,1,1,1,F,228,,
+Clan,Light TAG,0 (0),**,0/3/6/9 (**),NA,0.5,1,1,1,1,1,1,1,F,238,,
+Clan,MASC,NA,NA (NA),NA (NA),NA,Var*,Var*,NA,NA,NA,NA,NA,NA,F,232,,
+Clan,Machine Gun Array,NA,**,** (**),**,+0.25,1,1,1,1,1,1,1,E,228,,
+Clan,Medium Pulse Laser,4 (4),7 (7),0/4/8/12 (Medium),NA,2,1,1,1,1,1,1,1,F,226,,
+Clan,Micro Pulse Laser,1 (1),3 (3),0/1/2/3 (Short),NA,0.5,1,1,1,1,1,1,1,F,226,,
+Clan,Plasma Cannon,7 (7),0** (**) ,0/6/12/18 (Medium),10,3,1,1,1,1,1,1,1,F,234,,
+Clan,SRM 2,2 (2),2/Msl (2),0/3/6/9 (Short),50,0.5,1,1,1,1,1,1,1,F,229,,
+Clan,SRM 2 + Artemis IV,2 (2),2/Msl (4),0/3/6/9 (Short),50,1.5,2,1,1,2,1,1,1,F,206/229,,
+Clan,SRM 4,3 (3),2/Msl (4),0/3/6/9 (Short),25,1,1,1,1,1,1,1,1,F,229,,
+Clan,SRM 4 + Artemis IV,3 (3),2/Msl (6),0/3/6/9 (Short),25,2,2,1,1,2,1,1,1,F,206/229,,
+Clan,SRM 6,4 (4),2/Msl (8),0/3/6/9 (Short),15,1.5,1,1,1,1,1,1,1,,229,,
+Clan,SRM 6 + Artemis IV,4 (4),2/Msl (10),0/3/6/9 (Short),15,2.5,2,1,1,2,1,1,1,F,206/229,,
+Clan,Small Pulse Laser,2 (2),3 (3),0/2/4/6 (Short),NA,1,1,1,1,1,1,1,1,F,226,,
+Clan,Streak SRM 2,2 (2),2/Msl (4),0/4/8/12 (Medium),50,1,1,1,1,1,1,1,1,F,230,,
+Clan,Streak SRM 4,3 (3),2/Msl (8),0/4/8/12 (Medium),25,2,1,1,1,1,1,1,1,F,230,,
+Clan,Streak SRM 6,4 (4),2/Msl (12),0/4/8/12 (Medium),15,3,2,1,1,2,1,1,1,F,230,,
+Clan,TAG,0 (0),**,0/5/9/15 (**),NA,1,1,1,1,1,1,1,1,E,238,,
+Clan,Targeting Computer,0 (0),**,NA (NA),NA,Var*,Var*,NA,1,Var*,0,NA,NA,F,238,,
+Clan,White Shark,NA (15),NA (30),NA (Extreme),40 t/Msl,120,NA,NA,NA,NA,NA,NA,1,F,210,,
+IS,A-Pods,0 (NA),**,** (NA),OS,0.5,1,NA,1,1,NA,NA,NA,B,204,,
+IS,AR-10 Launcher,NA (††),NA (††),NA (††),††,250,NA,NA,NA,NA,NA,NA,1,F,210,,
+IS,Anti-Missile System,1 (1),**,** (Point Defense),12,0.5,1,NA,1,1,1,1,1,E,204,32†,11†
+IS,Anti-Missile System,1 (1),**,** (Point Defense),24,0.5,1,1,1,1,1,1,1,F,204,32†,11†
+IS,Autocannon/10,3 (3),10 (10),0/5/10/15 (Medium),10,12,7,NA,1,7,1,1,1,C,208,123,15
+IS,Autocannon/2,1 (1),2 (2),4/8/16/24 (Long),45,6,1,NA,1,1,1,1,1,C,208,37,5
+IS,Autocannon/20,7 (7),20 (20),0/3/6/9 (Short),5,14,10,NA,1,10,1,1,1,C,208,178,22
+IS,Autocannon/5,1 (1),5 (5),3/6/12/18 (Medium),20,8,4,NA,1,1,1,1,1,C,208,70,9
+IS,B-Pods,0 (NA),**,** (NA),OS,1,1,NA,1,1,NA,NA,NA,E,204,,
+IS,Barracuda,NA (10),NA (20),NA (Extreme),30 t/Msl,90,NA,NA,NA,NA,NA,NA,1,F,210,,
+IS,Barracuda-T,NA (10),NA (20),NA (Extreme),30 t/Msl,100,NA,NA,NA,NA,NA,NA,1,F,210,,
+IS,Beagle Active Probe,0 (0),NA,0/0/0/4,(**) NA,1.5,2,NA,1,2,1,1,1,E,204,10,†
+IS,C3 Computer (Master),0 (NA),NA (NA),NA (NA),NA,5,5*,NA,1,1*,NA,NA,NA,E,209,,
+IS,C3 Computer (Slave),0 (NA),NA (NA),NA (NA),NA,1,1*,NA,1,1*,NA,NA,NA,E,209,,
+IS,CASE,0 (0),NA (NA),NA (NA),NA,0.5,1,NA,1,1,0,NA,NA,D,210,,
+IS,ER Large Laser,3 (3),12 (12),0/6/11/16 (Long),NA,1,1,NA,1,1,1,1,1,C,226,163,
+IS,ER Medium Laser,2 (2),6 (6),0/4/7/10 (Medium),NA,1,1,NA,1,1,1,1,1,C,226,62,
+IS,ER PPC,15 (15),10 (10),0/7/14/23 (Long),NA,7,3,NA,1,3,1,1,1,E,233,228,
+IS,ER PPC,15 (15),15 (15),0/7/14/23 (Long),NA,6,2,NA,1,2,1,1,1,F,233,228,
+IS,ER Small Laser,2 (2),3 (3),0/2/4/5 (Short),NA,0.5,1,NA,1,1,1,1,1,C,226,17,
+IS,Flamer,3 (3),2 (2),0/1/2/3 (Short),NA,1,1,NA,1,1,1,1,1,C,218,6,
+IS,Flamer,3 (3),2 (2),0/1/2/3 (Short),NA,0.5,1,1,1,1,1,1,1,C,218,6,
+IS,Flamer (Vehicle),3 (3),2 (2),0/1/2/3 (Short),20,0.5,1,NA,1,1,1,1,1,B,218,5,1
+IS,Flamer (Vehicle),3 (3),2 (2),0/1/2/3 (Short),20,0.5,1,NA,1,1,1,1,1,B,218,5,1
+IS,Gauss Rifle,1 (1),15 (15),2/7/15/22 (Long),8,15,7,NA,1,7,1,1,1,E,219,320,40§
+IS,Gauss Rifle,1 (1),15 (15),2/7/15/22 (Long),8,12,6,NA,1,6,1,1,1,F,219,320,40§
+IS,Guardian ECM Suite,0 (0),NA,0/0/0/6,(**) NA,1.5,2,NA,1,2,1,1,1,E,213,61,†
+IS,Hatchet,0 (NA),** (NA),PHYS (NA),NA,Var*,Var*,NA,NA,NA,NA,NA,NA,B,220,(Damage x 1.5),
+IS,Heavy Gauss Rifle,2 (2),25/20/10 (25/20/10),4/6/13/20 (Long),4,18,11,NA,1,11,1,1,1,E,218,,
+IS,Heavy Machine Gun,0 (0),3 (3),0/1/2/— (Short),100,1.0,1,NA,1,1,1,1,1,B,228,6,1
+IS,Heavy PPC,15 (15),15 (15),3/6/12/18 (Medium),NA,10,4,NA,1,4,1,1,1,E,234,317,
+IS,Imp. Narc Launcher,0 (**),**,0/4/9/15,(**) 4,5,3,NA,1,3,1,1,1,E,232,,
+IS,Improved C3 Computer,0 (NA),NA (NA),NA (NA),NA,2.5,2*,NA,1,1*,NA,NA,NA,E,209,,
+IS,Killer Whale,NA (20),NA (40),NA (Extreme),50 t/Msl,150,NA,NA,NA,NA,NA,NA,1,F,210,,
+IS,Killer Whale-T,NA (20),NA (40),NA (Extreme),50 t/Msl,160,NA,NA,NA,NA,NA,NA,1,F,210,,
+IS,Kraken-T,NA (50),NA (100),NA (Extreme),100 t/Msl,220,NA,NA,NA,NA,NA,NA,1,F,210,,
+IS,LB 10-X AC,2 (2),10 (6),0/6/12/18 (Medium),10,11,6,NA,1,6,1,1,1,E,207,148,19
+IS,LB 10-X AC,2 (2),10 (6),0/6/12/18 (Medium),10,10,5,NA,1,5,1,1,1,F,207,148,19
+IS,LB 2-X AC,1 (1),2 (2),4/9/18/27 (Extreme),45,6,4,NA,1,4,1,1,1,E,207,42,5
+IS,LB 2-X AC,1 (1),2 (2),4/10/20/30 (Extreme),45,5,3,1,1,3,1,1,1,F,207,42,5
+IS,LB 20-X AC,6 (6),20 (12),0/4/8/12 (Medium),5,14,11,NA,1,11,1,1,1,E,207,237,30
+IS,LB 20-X AC,6 (6),20 (12),0/4/8/12 (Medium),5,12,9,NA,1,9,1,1,1,F,207,237,30
+IS,LB 5-X AC,1 (1),5 (3),5/3/7/14/21 (Long),20,8,5,NA,1,5,1,1,1,E,207,83,10
+IS,LB 5-X AC,1 (1),5 (3),3/8/15/24 (Long),20,7,4,1,1,4,1,1,1,F,207,83,10
+IS,LRM 10,4 (4),1/Msl (6),6/7/14/21 (Long),12,5,2,NA,1,2,1,1,1,C,229,90,11
+IS,LRM 10 + Artemis IV,4 (4),1/Msl (8),6/7/14/21 (Long),12,6,3,NA,1,3,1,1,1,E,206/229,108,11
+IS,LRM 15,5 (5),1/Msl (9),6/7/14/21 (Long),8,7,3,NA,1,3,1,1,1,C,229,136,17
+IS,LRM 15 + Artemis IV,5 (5),1/Msl (12),6/7/14/21 (Long),8,8,4,NA,1,4,1,1,1,E,206/229,163,17
+IS,LRM 20,6 (6),1/Msl (12),6/7/14/21 (Long),6,10,5,NA,1,5,1,1,1,C,229,181,23
+IS,LRM 20 + Artemis IV,6 (6),1/Msl (16),6/7/14/21 (Long),6,11,6,NA,1,6,1,1,1,E,206/229,217,23
+IS,LRM 5,2 (2),1/Msl (3),6/7/14/21 (Long),24,2,1,NA,1,1,1,1,1,C,229,45,6
+IS,LRM 5 + Artemis IV,2 (2),1/Msl (4),6/7/14/21 (Long),24,3,2,NA,1,2,1,1,1,E,206/229,54,6
+IS,Large Laser,8 (8),8 (8),0/5/10/15 (Medium),NA,5,2,NA,1,5,1,1,1,C,227,123,
+IS,Large Pulse Laser,4 (4),12 (12),0/5/10/15 (Long),NA,1,1,NA,1,1,1,1,1,C,219,119,
+IS,Light AC/2,1 (1),2 (2),0/6/12/18 (Medium),45,4,1,NA,1,1,1,1,1,D,207,30,4
+IS,Light AC/5,1 (1),5 (5),0/5/10/15 (Medium),20,5,2,NA,1,2,1,1,1,D,207,62,8
+IS,Light Gauss Rifle,1 (1),8 (8),3/8/17/25 (Extreme),16,12,5,NA,1,5,1,1,1,E,219,,
+IS,Light Machine Gun,0 (0),1 (1),0/2/4/6 (Short),200,0.5,1,NA,1,1,1,1,1,B,228,5,1
+IS,Light PPC,3 (3),7 (7),0/3/6/9 (Medium),NA,8,2,NA,1,2,1,1,1,C,219,88,
+IS,MASC,NA,NA (NA),NA (NA),NA,Var*,Var*,NA,NA,NA,NA,NA,NA,E,232,,
+IS,MML 3 (LRM),2 (2),1/Msl (2),6/7/14/21 (Long),40,1.5,2,NA,1,2,1,1,1,E,229,,
+IS,MML 3 (LRM)+Art. IV,2 (2),1/Msl (2),6/7/14/21 (Long),40,2.5,3,NA,1,3,1,1,1,E,206/229,,
+IS,MML 3 (SRM),2 (2),2/Msl (4),0/3/6/9 (Short),33,1.5,2,NA,1,2,1,1,1,E,229,,
+IS,MML 3 (SRM)+Art. IV,2 (2),2/Msl (4),0/3/6/9 (Short),33,2.5,3,NA,1,3,1,1,1,E,206/229,,
+IS,MML 5 (LRM),3 (3),1/Msl (3),6/7/14/21 (Long),24,3,3,NA,1,3,1,1,1,E,229,,
+IS,MML 5 (LRM)+Art. IV,3 (3),1/Msl (4),6/7/14/21 (Long),24,4,4,NA,1,4,1,1,1,E,206/229,,
+IS,MML 5 (SRM),3 (3),2/Msl (6),0/3/6/9 (Short),20,3,3,NA,1,3,1,1,1,E,229,,
+IS,MML 5 (SRM)+Art. IV,3 (3),2/Msl (8),0/3/6/9 (Short),20,4,4,NA,1,4,1,1,1,E,206/229,,
+IS,MML 7 (LRM),4 (4),1/Msl (4),6/7/14/21 (Long),17,4.5,4,NA,1,4,1,1,1,E,229,,
+IS,MML 7 (LRM)+Art. IV,4 (4),1/Msl (6),6/7/14/21 (Long),17,5.5,5,NA,1,5,1,1,1,E,206/229,,
+IS,MML 7 (SRM),4 (4),2/Msl (8),0/3/6/9 (Short),14,4.5,4,NA,1,4,1,1,1,E,229,,
+IS,MML 7 (SRM)+Art. IV,4 (4),2/Msl (12),0/3/6/9 (Short),14,5.5,5,NA,1,5,1,1,1,E,206/229,,
+IS,MML 9 (LRM),5 (5),1/Msl (5),6/7/14/21 (Long),13,6,5,NA,1,5,1,1,1,E,229,,
+IS,MML 9 (LRM)+Art. IV,5 (5),1/Msl (7),6/7/14/21 (Long),13,7,6,NA,1,6,1,1,1,E,206/229,,
+IS,MML 9 (SRM),5 (5),2/Msl (10),0/3/6/9 (Short),11,6,5,NA,1,5,1,1,1,E,229,,
+IS,MML 9 (SRM)+Art. IV,5 (5),2/Msl (14),0/3/6/9 (Short),11,7,6,NA,1,6,1,1,1,E,206/229,,
+IS,MRM 10,4 (4),1/Msl (6),0/3/8/15 (Medium),24,3,2,NA,1,2,1,1,1,C,229,56,7
+IS,MRM 20,6 (6),1/Msl (12),0/3/8/15 (Medium),12,7,3,NA,1,3,1,1,1,C,229,112,14
+IS,MRM 30,10 (10),1/Msl (18),0/3/8/15 (Medium),8,10,5,NA,1,5,1,1,1,C,229,168,21
+IS,MRM 40,12 (12),1/Msl (24),0/3/8/15 (Medium),6,12,7,NA,1,7,1,1,1,C,229,224,28
+IS,Machine Gun,0 (0),2 (2),0/1/2/3 (Short),200,0.5,1,NA,1,1,1,1,1,B,228,5,1
+IS,Machine Gun,0 (0),2 (2),0/1/2/3 (Short),200,0.25,1,1,1,1,1,1,1,C,228,5,1
+IS,Machine Gun Array,NA,**,**,(**) **,+0.5,1,NA,1,1,1,1,1,E,228,,
+IS,Medium Laser,5 (5),5 (5),0/3/6/9 (Short),NA,1,1,NA,1,1,1,1,1,C,227,46,
+IS,Medium Pulse Laser,3 (3),6 (6),0/3/6/9 (Medium),NA,1,1,NA,1,1,1,1,1,C,219,48,
+IS,Narc Missile Beacon,0 (**),**,0/3/6/9,(**) 6,3,2,NA,1,2,1,1,1,E,232,30/6,0
+IS,Narc Missile Beacon,0 (**),**,0/4/8/12 (**),6,2,1,1,1,1,1,1,1,F,232,30/6,0
+IS,One-Shot (SRM,LRM),NA,NA,NA,OS,+0.5,NA,NA,NA,NA,NA,NA,**,229,,
+IS,PPC,5 (5),10 (10),0/4/8/12 (Long),NA,12,2,NA,1,2,1,1,1,C,219,176,
+IS,PPC,10 (10),10 (10),3/6/12/18 (Medium),NA,7,3,NA,1,3,1,1,1,D,234,176,
+IS,Rocket Launcher 10,3 (3),1/Msl (6),0/5/11/18 (Medium),OS,0.5,1,NA,1,1,1,1,1,B,229,18,
+IS,Rocket Launcher 15,4 (4),1/Msl (9),0/4/9/15 (Medium),OS,1,2,NA,1,2,1,1,1,B,229,23,
+IS,Rocket Launcher 20,5 (5),1/Msl (12),0/3/7/12 (Medium),OS,1.5,3,NA,1,3,1,1,1,B,229,24,
+IS,Rotary AC/2,1/Shot (6),2/Shot (8),0/6/12/18 (Medium),45,8,3,NA,1,3,1,1,1,E,207,118,15
+IS,Rotary AC/5,1/Shot (6),5/Shot (20),0/5/10/15 (Medium),20,10,6,NA,1,6,1,1,1,E,207,247,31
+IS,SRM 2,2 (2),2/Msl (4),0/3/6/9 (Short),50,1,1,NA,1,1,1,1,1,c,229,21,3
+IS,SRM 2 + Artemis IV,2 (2),2/Msl (4),0/3/6/9 (Short),50,2,2,NA,1,2,1,1,1,E,206/229,25,3
+IS,SRM 4,3 (3),2/Msl (6),0/3/6/9 (Short),25,2,1,NA,1,1,1,1,1,c,229,39,5
+IS,SRM 4 + Artemis IV,3 (3),2/Msl (6),0/3/6/9 (Short),25,3,2,NA,1,2,1,1,1,E,206/229,47,5
+IS,SRM 6,4 (4),2/Msl (10),0/3/6/9 (Short),15,3,2,NA,1,2,1,1,1,c,229,59,7
+IS,SRM 6 + Artemis IV,4 (4),2/Msl (10),0/3/6/9 (Short),15,4,3,NA,1,3,1,1,1,E,206/229,71,7
+IS,Screen Launcher,NA (10),NA (**),NA (Short),10 t/Msl,40,NA,NA,NA,NA,NA,1,1,F,237,,
+IS,Small Laser,2 (2),3 (3),0/1/2/3 (Short),NA,0.5,1,NA,1,1,1,1,1,C,227,9,
+IS,Snub-Nose PPC,10 (10),10/8/5 (10/8),0/9/13/15 (Medium),NA,6,2,NA,1,2,1,1,1,E,234,165,
+IS,Streak SRM 2,2 (2),2/Msl (4),0/3/6/9 (Short),50,1.5,1,NA,1,1,1,1,1,E,230,30,4
+IS,Streak SRM 4,3 (3),2/Msl (8),0/3/6/9 (Short),25,3,1,NA,1,1,1,1,1,E,230,59,7
+IS,Streak SRM 6,4 (4),2/Msl (12),0/3/6/9 (Short),15,4.5,2,NA,1,2,1,1,1,E,230,89,11
+IS,Sword,0 (NA),** (NA),PHYS (NA),NA,Var*,Var*,NA,NA,NA,NA,NA,NA,B,237,(Damage x 1.725),
+IS,TAG,0 (0),**,0/5/9/15,(**) NA,1,1,NA,1,1,1,1,1,E,238,,
+IS,Targeting Computer,0 (0),** NA,(NA),NA,Var*,Var*,NA,1,Var*,0,NA,NA,E,238,,
+IS,Ultra AC/10,4/Shot (8),10/Shot (15),0/6/12/18 (Medium),10,13,7,NA,1,7,1,1,1,E,208,210,26
+IS,Ultra AC/10,3/Shot (6),10/Shot (15),0/6/12/18 (Medium),10,10,4,NA,1,4,1,1,1,F,208,210,26
+IS,Ultra AC/2,1/Shot (2),2/Shot (3),3/8/17/25 (Extreme),45,7,3,NA,1,3,1,1,1,E,208,56,7
+IS,Ultra AC/2,1/Shot (2),2/Shot (3),2/9/18/27 (Extreme),45,5,2,1,1,2,1,1,1,F,208,56,7
+IS,Ultra AC/20,8/Shot (16),20/Shot (30),0/3/7/10 (Medium),5,15,10,NA,1,10,1,1,1,E,208,281,35
+IS,Ultra AC/20,7/Shot (14),20/Shot (30),0/4/8/12 (Medium),5,12,8,NA,1,8,1,1,1,F,208,281,35
+IS,Ultra AC/5,1/Shot (2),5/Shot (7),2/6/13/20 (Long),20,9,5,NA,1,5,1,1,1,E,208,112,14
+IS,Ultra AC/5,1/Shot (2),5/Shot (7),0/7/14/21 (Long),20,8,3,1,1,3,1,1,1,F,208,112,14
+IS,White Shark,NA (15),NA (30),NA (Extreme),40 t/Msl,120,NA,NA,NA,NA,NA,NA,1,F,210,,
+IS,White Shark-T,NA (15),NA (30),NA (Extreme),40 t/Msl,140,NA,NA,NA,NA,NA,NA,1,F,210,,

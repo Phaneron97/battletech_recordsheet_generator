@@ -228,6 +228,24 @@ custom_pdf = {
             "rotation": 12,  
             "margin": 1
         }
+    },
+    "heat_data": {
+        "empty_placeholder": {
+            "x": 1,
+            "y": 1,
+            "width": 100,
+            "height": 100,
+            "rotation": 0,  
+            "margin": 1
+        },
+        "heat_data_diagram": {
+            "x": 500,
+            "y": 200,
+            "width": 200,
+            "height": 200,
+            "rotation": 0,  
+            "margin": 1
+        },
     }
 }
 

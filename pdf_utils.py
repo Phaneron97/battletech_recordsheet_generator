@@ -6,7 +6,7 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.lib.utils import ImageReader
 from PIL import Image
 import os
-from armor_utils import add_placeholder_diagram, add_armor_points
+from armor_utils import add_placeholder_diagram, add_armor_points, add_heat_points
 import math
 import csv
 import re
@@ -73,10 +73,10 @@ def calculate_battle_value(custom_mech, weapon_data):
     defensive_battle_rating = (armor_factor + structure_factor + gyro_bv) * 1.2
 
     # Print debug information for DBR
-    print("Armor Factor:", armor_factor)
-    print("Structure Factor:", structure_factor)
-    print("Gyro BV:", gyro_bv)
-    print("Defensive Battle Rating:", defensive_battle_rating)
+    # print("Armor Factor:", armor_factor)
+    # print("Structure Factor:", structure_factor)
+    # print("Gyro BV:", gyro_bv)
+    # print("Defensive Battle Rating:", defensive_battle_rating)
 
     # Step 2: Offensive Battle Rating (OBR)
     weapon_bv_total = 0
@@ -89,9 +89,9 @@ def calculate_battle_value(custom_mech, weapon_data):
 
                 heat = weapon_data[weapon_name_key]["heat"]
                 weapon_bv = damage * heat  # BV calculation per weapon instance
-                print("damage", damage)
-                print("heat", heat)
-                print("weaponbv",weapon_bv)
+                # print("damage", damage)
+                # print("heat", heat)
+                # print("weaponbv",weapon_bv)
                 
                 # Convert quantity to integer before multiplication
                 weapon_bv_total += weapon_bv * int(quantity)
@@ -216,6 +216,7 @@ def get_engine_rating(mech_tonnage, walking_mp):
 
 def get_internal_heatsinks(engine_rating):
     """calculate amount of internal heatsinks based on engine_rating, always rounds number down. returns one integer"""
+    
     return math.floor(engine_rating / 25)
 
 
@@ -237,6 +238,31 @@ def get_total_jumpjet_tonnage(mech_tonnage, jumping_mp):
     
     total_jumpjet_tonnage = jumping_mp * jumpjet_weight
     return total_jumpjet_tonnage
+
+
+# Calculate total heat sinks
+def calculate_total_heatsinks(custom_mech):
+    # Extract mech tonnage and walking movement points
+    mech_tonnage = int(custom_mech["mech_data"]["tonnage"])
+    walking_mp = int(custom_mech["mech_data"]["movement_points"]["walking"])
+
+    # Calculate engine rating and internal heat sinks
+    engine_rating = get_engine_rating(mech_tonnage, walking_mp)
+    internal_heatsinks = get_internal_heatsinks(engine_rating)
+
+    # Add any additional heat sinks from the mech configuration
+    additional_heatsinks = sum(custom_mech["heatsinks"]["heatsink_locations"].values())
+
+    # Total heatsinks = internal + additional
+    total_heatsinks = internal_heatsinks + additional_heatsinks
+
+    # Print debug information for total heatsinks
+    print("Engine Rating:", engine_rating)
+    print("Internal Heat Sinks:", internal_heatsinks)
+    print("Additional Heat Sinks:", additional_heatsinks)
+    print("Total Heat Sinks:", total_heatsinks)
+
+    return total_heatsinks
 
 
 def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filename, weapon_details):
@@ -270,10 +296,17 @@ def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filenam
     add_placeholder_diagram(c, custom_pdf["structure_diagram"], "structure_diagram_empty.png")
     # add_placeholder_diagram(c, custom_pdf["mech_data"], "empty_weapons_and_equipment_inv.png")
     add_placeholder_diagram(c, custom_pdf["mech_data"]["weapons_and_equipment_inv_empty_placeholder"], "empty_weapons_and_equipment_inv.png")
-
+    add_placeholder_diagram(c, custom_pdf["heat_data"]["heat_data_diagram"], "empty_heat_data_diagram.png")
     # Add armor points
     add_armor_points(c, custom_pdf["armor_diagram"], custom_mech["armor_points"])
     add_armor_points(c, custom_pdf["structure_diagram"], custom_mech["structure_points"])
+    # add_armor_points(c, custom_pdf[])
+
+    # Calculate total heat sinks
+    total_heatsinks = calculate_total_heatsinks(custom_mech)
+
+    # Draw the heat sink points on the canvas
+    add_heat_points(c, custom_pdf["heat_data"], total_heatsinks)
 
     # Add weapons and equipment
     start_y = custom_pdf["mech_data"]["weapons_and_equipment_inv_text"]["y"]
@@ -308,6 +341,8 @@ def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filenam
     weapon_data = load_weapon_data(weapon_csv)
     # print("Battlevalue: ", calculate_battle_value(custom_mech, weapon_data))
 
+    total_heatsinks = calculate_total_heatsinks(custom_mech)
+    print(total_heatsinks)
     # Save the canvas
     c.save()
 

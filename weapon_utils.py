@@ -46,7 +46,7 @@ def load_weapon_data(csv_filename):
                 'lng': lng_range,
                 'slots': row.get('M', '0')  # 'P' is assumed as equivalent to 'Slots'
             }
-            print("weapon", weapon_data[name])
+            # print("weapon", weapon_data[name])
     return weapon_data
 
 # Helper function to parse range values in the format "min/sht/med/lng"

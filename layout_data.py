@@ -233,7 +233,7 @@ custom_pdf = {
 
 custom_mech = {
     "mech_data": {
-        "type": "BattleMaster BLR-1G",
+        "type": "Viper",
         "tonnage": "85",
         "tech_base": "IS",
         "movement_points": {

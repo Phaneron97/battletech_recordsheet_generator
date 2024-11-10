@@ -10,10 +10,11 @@ from armor_utils import add_placeholder_diagram, add_armor_points
 import math
 import csv
 import re
+from PIL import Image
 
 # Register the custom fonts
 pdfmetrics.registerFont(TTFont('EurostileBold', 'fonts/EurostileBold.ttf'))
-pdfmetrics.registerFont(TTFont('Eurostile', 'fonts/Eurostile.ttf'))
+pdfmetrics.registerFont(TTFont('Eurostile', 'fonts/EuroStile.ttf'))
 
 # Load weapon data from CSV and clean the "Damage" and "Heat" columns
 def load_weapon_data(csv_filename):
@@ -147,10 +148,27 @@ def set_text_from_layout_data(c, mech_data, layout_data):
                 c.setFont(info['font'], info['size'])
                 c.drawString(info['x'], letter[1] - info['y'], str(data))
 
-def add_mech_image(c, mech_type, image_info, image_folder="mech_images"):
+
+def find_closest_image(mech_type, image_folder):
+    """Finds the closest image file in the image folder based on the mech type."""
+    mech_type_lower = mech_type.lower()
+    
+    # List all files in the folder and find the best match
+    for file_name in os.listdir(image_folder):
+        file_base_name, file_ext = os.path.splitext(file_name)
+        
+        # If the file name (without extension) contains the mech type, return full path
+        if mech_type_lower in file_base_name.lower():
+            return os.path.join(image_folder, file_name)
+    
+    return None
+
+def add_mech_image(c, mech_type, image_info, image_folder="mech_images/megamek_images/Mech/"):
     """Adds a mech image to the PDF canvas, cropping and scaling it to fit the specified dimensions."""
-    image_path = os.path.join(image_folder, f"{mech_type}.webp")
-    if os.path.exists(image_path):
+    # Find the closest image match based on mech_type
+    image_path = find_closest_image(mech_type, image_folder)
+    
+    if image_path and os.path.exists(image_path):
         with Image.open(image_path) as img:
             img_width, img_height = img.size
             aspect_ratio = image_info['width'] / image_info['height']
@@ -177,7 +195,8 @@ def add_mech_image(c, mech_type, image_info, image_folder="mech_images"):
                 height=image_info['height']
             )
     else:
-        print(f"Image not found for mech type '{mech_type}' at '{image_path}'")
+        print(f"Image not found for mech type '{mech_type}' in '{image_folder}'")
+
 
 def add_tech_base_checkmark(c, tech_base, tech_base_checkmark):
     """Draws a checkmark for the tech base (IS or Clan) based on tech_base value."""
@@ -249,6 +268,7 @@ def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filenam
     # Add the placeholder diagrams for armor and weapons
     add_placeholder_diagram(c, custom_pdf["armor_diagram"], "armor_diagram_empty.png")
     add_placeholder_diagram(c, custom_pdf["structure_diagram"], "structure_diagram_empty.png")
+    # add_placeholder_diagram(c, custom_pdf["mech_data"], "empty_weapons_and_equipment_inv.png")
     add_placeholder_diagram(c, custom_pdf["mech_data"]["weapons_and_equipment_inv_empty_placeholder"], "empty_weapons_and_equipment_inv.png")
 
     # Add armor points
@@ -286,7 +306,7 @@ def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filenam
     # Load weapon data and calculate BV
     weapon_csv = "weapons_and_ammo.csv"
     weapon_data = load_weapon_data(weapon_csv)
-    print("Battlevalue: ", calculate_battle_value(custom_mech, weapon_data))
+    # print("Battlevalue: ", calculate_battle_value(custom_mech, weapon_data))
 
     # Save the canvas
     c.save()

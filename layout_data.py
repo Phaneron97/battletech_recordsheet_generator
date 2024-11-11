@@ -159,32 +159,32 @@ custom_pdf = {
         }
     },
     "structure_diagram": {
-        "x": 396,
-        "y": 278,
-        "width": 180,
-        "height": 317,
+        "x": 394,
+        "y": 413,
+        "width": 160,
+        "height": 172,
         "margin": 1,
         "head": {
-            "x": 475,
-            "y": 400,
-            "width": 20,
-            "height": 20,
+            "x": 467,
+            "y": 425,
+            "width": 12,
+            "height": 12,
             "rotation": 0,
             "margin": 1
         },
         "center_torso": {
-            "x": 475,
-            "y": 450,
-            "width": 20,
-            "height": 80,
+            "x": 466,
+            "y": 445,
+            "width": 14,
+            "height": 50,
             "rotation": 0,
             "margin": 1
         },
         "left_torso": {
             "x": 440,
-            "y": 450,
-            "width": 20,
-            "height": 75,
+            "y": 430,
+            "width": 14,
+            "height": 45,
             "rotation": 3,
             "margin": 1
         },
@@ -239,19 +239,19 @@ custom_pdf = {
             "margin": 1
         },
         "heat_data_diagram": {
-            "x": 500,
-            "y": 200,
-            "width": 200,
-            "height": 200,
+            "x": 50,
+            "y": 50,
+            "width": 30,
+            "height": 100, 
             "rotation": 0,  
-            "margin": 1
+            "margin": 10
         },
     }
 }
 
 custom_mech = {
     "mech_data": {
-        "type": "Viper",
+        "type": "Atlas",
         "tonnage": "85",
         "tech_base": "IS",
         "movement_points": {

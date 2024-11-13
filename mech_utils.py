@@ -145,21 +145,32 @@ def set_text_from_layout_data(c, mech_data, layout_data):
 
 
 def find_closest_image(mech_type, image_folder):
-    """Finds the closest image file in the image folder based on the mech type."""
+    """Finds the exact image file in the image folder based on the mech type, case-insensitive."""
     mech_type_lower = mech_type.lower()
-    
-    # List all files in the folder and find the best match
+
+    # Debug: Print directory contents
+    print(f"Searching for '{mech_type}' in '{image_folder}'")
+    print("Directory contents:", os.listdir(image_folder))  # List all files in the directory
+
+    # Search through the folder for an exact case-insensitive match
     for file_name in os.listdir(image_folder):
         file_base_name, file_ext = os.path.splitext(file_name)
-        
-        # If the file name (without extension) contains the mech type, return full path
-        if mech_type_lower in file_base_name.lower():
-            return os.path.join(image_folder, file_name)
-    
+
+        # Debug: Print each file being checked
+        print(f"Checking file: '{file_base_name}{file_ext}' against '{mech_type}'")
+
+        # Check if the lowercase file name matches the mech type exactly
+        if file_base_name.lower() == mech_type_lower:
+            full_path = os.path.join(image_folder, file_name)
+            print(f"Match found: {full_path}")  # Debug line for match confirmation
+            return full_path
+
+    # If no match is found, print debug message
+    print(f"No match found for '{mech_type}' in '{image_folder}'")
     return None
 
 
-def add_mech_image(c, mech_type, image_info, image_folder="mech_images/megamek_images/Mech/"):
+def add_mech_image(c, mech_type, image_info, image_folder="mech_images/megamek_images/Mech"):
     """Adds a mech image to the PDF canvas, cropping and scaling it to fit the specified dimensions."""
     # Find the closest image match based on mech_type
     image_path = find_closest_image(mech_type, image_folder)

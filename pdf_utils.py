@@ -18,15 +18,43 @@ pdfmetrics.registerFont(TTFont('EurostileBold', 'fonts/EurostileBold.ttf'))
 pdfmetrics.registerFont(TTFont('Eurostile', 'fonts/EuroStile.ttf'))
 
 
-def add_tech_base_checkmark(c, tech_base, tech_base_checkmark):
-    """Draws a checkmark for the tech base (IS or Clan) based on tech_base value."""
+def add_checkmark(c, entity_type, entity_checkmark, custom_mech=None):
+    """Draws a checkmark based on the given entity type (tech base or heatsink type)."""
     checkmark_image = "sheet_images/checkmark.png"
-    # Get the position based on tech_base
-    pos = tech_base_checkmark.get(tech_base, tech_base_checkmark["IS"])
+    
+    # Ensure custom_mech is provided if needed
+    if custom_mech is None:
+        raise ValueError("custom_mech must be provided")
 
-    # Draw the checkmark image at the specified position
-    if os.path.exists(checkmark_image):
+    # Initialize the position variable
+    pos = None
+
+    # Handle 'tech_base' case
+    if entity_type == 'tech_base':
+        # Get the tech_base from custom_mech (default to 'IS' if not present)
+        tech_base = custom_mech["mech_data"].get("tech_base", "IS")
+        
+        # Get the position from entity_checkmark based on the tech_base value
+        pos = entity_checkmark.get(tech_base)
+        
+    # Handle 'heatsink_type' case
+    elif entity_type == 'heatsink_type':
+        # Get the heatsink_type from custom_mech (default to 'single' if not present)
+        heatsink_type = custom_mech["heatsinks"].get("heatsink_type", "single")
+        
+        # Get the position from entity_checkmark based on the heatsink_type value
+        pos = entity_checkmark.get(heatsink_type)
+    
+    else:
+        # Raise an error if an unsupported entity_type is passed
+        raise ValueError("Unsupported entity_type. Must be 'tech_base' or 'heatsink_type'.")
+
+    # If the position is valid and the checkmark image exists, draw the checkmark
+    if pos and os.path.exists(checkmark_image):
         c.drawImage(ImageReader(checkmark_image), pos["x"], letter[1] - pos["y"], width=6, height=6)
+    else:
+        raise ValueError(f"Position not found for entity_type '{entity_type}' or invalid checkmark image path.")
+
 
 
 def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filename, weapon_details):
@@ -95,12 +123,13 @@ def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filenam
         start_y -= 11  # Move down for the next weapon
 
     # Add tech base checkmark
-    add_tech_base_checkmark(c, custom_mech_info.get("tech_base", "IS"), custom_pdf["tech_base_checkmark"])
+    add_checkmark(c, 'tech_base', custom_pdf["tech_base_checkmark"], custom_mech)
+    # Add heatsink type checkmark
+    add_checkmark(c, 'heatsink_type', custom_pdf["heat_data"], custom_mech)
 
     # Load weapon data and calculate BV
     weapon_csv = "weapons_and_ammo.csv"
     weapon_data = load_weapon_data(weapon_csv)
-    # print("Battlevalue: ", calculate_battle_value(custom_mech, weapon_data))
 
     # Save the canvas
     c.save()

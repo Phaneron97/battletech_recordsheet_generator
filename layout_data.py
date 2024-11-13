@@ -170,7 +170,11 @@ custom_pdf = {
             "width": 12,
             "height": 12,
             "rotation": 0,
-            "margin": 1
+            "margin": 1,
+            "total_amount": {
+                "x": 20,
+                "y": 200
+            }
         },
         "center_torso": {
             "x": 466,
@@ -178,82 +182,104 @@ custom_pdf = {
             "width": 14,
             "height": 50,
             "rotation": 0,
-            "margin": 1
+            "margin": 1,
+            "total_amount": {
+                "x": 20,
+                "y": 220
+            }
         },
         "left_torso": {
-            "x": 440,
-            "y": 430,
-            "width": 14,
-            "height": 45,
-            "rotation": 3,
-            "margin": 1
+            "x": 443,
+            "y": 440,
+            "width": 12,
+            "height": 50,
+            "rotation": 4,
+            "margin": 1,
+            "total_amount": {
+                "x": 20,
+                "y": 240
+            }
         },
         "right_torso": {
-            "x": 510,
-            "y": 450,
-            "width": 20,
-            "height": 75,
-            "rotation": -3,
-            "margin": 1
+            "x": 491,
+            "y": 440,
+            "width": 12,
+            "height": 50,
+            "rotation": -4,
+            "margin": 1,
+            "total_amount": {
+                "x": 20,
+                "y": 80
+            }
         },
         "left_arm": {
-            "x": 415,
-            "y": 450,
-            "width": 15,
-            "height": 80,
-            "rotation": -6,  
-            "margin": 1
+            "x": 421,
+            "y": 440,
+            "width": 10,
+            "height": 60,
+            "rotation": -5,  
+            "margin": 1,
+            "total_amount": {
+                "x": 20,
+                "y": 100
+            }
         },
         "right_arm": {
-            "x": 541,
-            "y": 450,
-            "width": 15,
-            "height": 80,
-            "rotation": 6,  
-            "margin": 1
+            "x": 513,
+            "y": 440,
+            "width": 10,
+            "height": 60,
+            "rotation": 5,  
+            "margin": 1,
+            "total_amount": {
+                "x": 20,
+                "y": 120
+            }
         },
         "left_leg": {
-            "x": 445,
-            "y": 600,
-            "width": 18,
-            "height": 100,
-            "rotation": -12,  
-            "margin": 1
+            "x": 449,
+            "y": 500,
+            "width": 8,
+            "height": 60,
+            "rotation": -11,  
+            "margin": 0,
+            "total_amount": {
+                "x": 20,
+                "y": 140
+            }
         },
         "right_leg": {
-            "x": 505,
-            "y": 600,
-            "width": 18,
-            "height": 100,
-            "rotation": 12,  
-            "margin": 1
+            "x": 487,               
+            "y": 500,
+            "width": 8,
+            "height": 60,
+            "rotation": 11,  
+            "margin": 0,
+            "total_amount": {
+                "x": 20,
+                "y": 160
+            }
         }
     },
     "heat_data": {
-        "empty_placeholder": {
-            "x": 1,
-            "y": 1,
-            "width": 100,
-            "height": 100,
-            "rotation": 0,  
-            "margin": 1
-        },
         "heat_data_diagram": {
-            "x": 50,
-            "y": 50,
+            "x": 508,
+            "y": 630,
             "width": 30,
-            "height": 100, 
+            "height": 92, 
             "rotation": 0,  
-            "margin": 10
+            "margin": 5
         },
+        "single": { "x": 221, "y": 160 },
+        "double": { "x": 221, "y": 170 }
     }
 }
 
 custom_mech = {
     "mech_data": {
-        "type": "Atlas",
+        "type": "Battlemaster",
         "tonnage": "85",
-        "tech_base": "IS",
+        "tech_base": "C",
         "movement_points": {
             "walking": "4",
             "running": "6",

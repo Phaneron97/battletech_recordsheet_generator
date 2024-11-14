@@ -9,7 +9,6 @@ import os
 import math
 import csv
 import re
-from PIL import Image
 
 # Load weapon data from CSV and clean the "Damage" and "Heat" columns
 def load_weapon_data(csv_filename):

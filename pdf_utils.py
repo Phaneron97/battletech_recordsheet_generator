@@ -8,10 +8,6 @@ from PIL import Image
 import os
 from point_utils import *
 from mech_utils import *
-import math
-import csv
-import re
-from PIL import Image
 
 # Register the custom fonts
 pdfmetrics.registerFont(TTFont('EurostileBold', 'fonts/EurostileBold.ttf'))
@@ -88,6 +84,7 @@ def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filenam
     add_placeholder_diagram(c, custom_pdf["structure_diagram"], "structure_diagram_empty.png")
     add_placeholder_diagram(c, custom_pdf["mech_data"]["weapons_and_equipment_inv_empty_placeholder"], "empty_weapons_and_equipment_inv.png")
     add_placeholder_diagram(c, custom_pdf["heat_data"]["heat_data_diagram"], "empty_heat_data_diagram.png")
+    add_placeholder_for_arm_parts(c, custom_mech, custom_pdf)
     add_armor_points(c, custom_pdf["armor_diagram"], custom_mech["armor_points"])
     add_armor_points(c, custom_pdf["structure_diagram"], custom_mech["structure_points"])
 

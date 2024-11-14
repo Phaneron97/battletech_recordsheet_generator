@@ -270,8 +270,56 @@ custom_pdf = {
             "rotation": 0,  
             "margin": 5
         },
-        "single": { "x": 221, "y": 160 },
-        "double": { "x": 221, "y": 170 }
+        "single": { "x": 533, "y": 732 },
+        "double": { "x": 533, "y": 745 }
+    },
+    "critical_hit_table": {
+        "head": {
+
+        },
+        "center_torso": {
+
+        },
+        "left_torso": {
+
+        },
+        "right_torso": {
+
+        },
+        "left_arm": {
+            "lower_arm_actuator": {
+                "x": 75,
+                "y": 445,
+                "width": 80,
+                "height": 8
+            },
+            "hand_actuator": {
+                "x": 75,
+                "y": 453,
+                "width": 80,
+                "height": 8
+            }
+        },
+        "right_arm": {
+            "lower_arm_actuator": {
+                "x": 300,
+                "y": 445,
+                "width": 80,
+                "height": 8
+            },
+            "hand_actuator": {
+                "x": 300,
+                "y": 453,
+                "width": 80,
+                "height": 8
+            }
+        },
+        "left_leg": {
+
+        },
+        "right_leg": {
+
+        }
     }
 }
 
@@ -285,9 +333,13 @@ custom_mech = {
             "running": "6",
             "jumping": "0"
         },
-        "arm_parts": {
-            "lower_arm_actuator": True,
-            "hand_actuator": True
+        "left_arm_parts": {
+            "lower_arm_actuator": False,
+            "hand_actuator": False
+        },
+        "right_arm_parts": {
+            "lower_arm_actuator": False,
+            "hand_actuator": False
         }
     },    
     "armor_points": {

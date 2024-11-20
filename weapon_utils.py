@@ -96,7 +96,7 @@ def extract_weapon_details(weapons, weapon_data):
     for location, weapon_info in weapons.items():
         for weapon_name, quantity in weapon_info.items():
             # Lookup weapon attributes, ensuring name consistency with loaded data
-            normalized_name = weapon_name.lower().replace(' ', '_')
+            normalized_name = weapon_name.lower()
             if normalized_name in weapon_data:
                 weapon_attributes = weapon_data[normalized_name]
                 # Add formatted weapon detail to the list
@@ -104,4 +104,5 @@ def extract_weapon_details(weapons, weapon_data):
             else:
                 print(f"Warning: {weapon_name} not found in weapon data.")
                 
+    print("weapon details:", weapon_details)
     return weapon_details

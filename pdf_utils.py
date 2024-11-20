@@ -14,6 +14,24 @@ pdfmetrics.registerFont(TTFont('EurostileBold', 'fonts/EurostileBold.ttf'))
 pdfmetrics.registerFont(TTFont('Eurostile', 'fonts/EuroStile.ttf'))
 
 
+def add_placeholder_diagram(c, armor_diagram_info, image_name):
+    """Draws the image with a border for debugging."""
+    image_path = os.path.join("sheet_images", image_name)
+    
+    # Calculate the position of the image
+    x_position = armor_diagram_info['x']
+    y_position = letter[1] - armor_diagram_info['y'] - armor_diagram_info['height']
+    
+    # Draw the image (assuming the image exists)
+    c.drawImage(ImageReader(image_path), x_position, y_position, 
+                width=armor_diagram_info['width'], height=armor_diagram_info['height'])
+    
+    # Draw a border around the image for debugging purposes
+    # c.setStrokeColor(red)  # Set the color of the border (red)
+    # c.setLineWidth(2)      # Set the border line width
+    # c.rect(x_position, y_position, armor_diagram_info['width'], armor_diagram_info['height'])
+
+
 def add_checkmark(c, entity_type, entity_checkmark, custom_mech=None):
     """Draws a checkmark based on the given entity type (tech base or heatsink type)."""
     checkmark_image = "sheet_images/checkmark.png"
@@ -50,6 +68,32 @@ def add_checkmark(c, entity_type, entity_checkmark, custom_mech=None):
         c.drawImage(ImageReader(checkmark_image), pos["x"], letter[1] - pos["y"], width=6, height=6)
     else:
         raise ValueError(f"Position not found for entity_type '{entity_type}' or invalid checkmark image path.")
+
+
+def add_placeholder_for_arm_parts(c, custom_mech, layout_data):
+    """Draws an empty box on the armor diagram for arm parts that are False in either left or right arm."""
+    
+    # Handle Left Arm parts
+    for part, is_present in custom_mech["mech_data"]["left_arm_parts"].items():
+        if not is_present:  # Only draw placeholder if part is False
+            print(f"Left arm part '{part}' is missing, placing empty box.")
+            # Find the corresponding position in the layout data (structure or armor)
+            if part in layout_data["critical_hit_table"]["left_arm"]:
+                armor_diagram_info = layout_data["critical_hit_table"]["left_arm"][part]
+                add_placeholder_diagram(c, armor_diagram_info, "empty_placeholder.png")  # Assuming "empty_box.png" is the placeholder image
+            else:
+                print(f"Warning: No layout data found for left arm part '{part}'")
+
+    # Handle Right Arm parts
+    for part, is_present in custom_mech["mech_data"]["right_arm_parts"].items():
+        if not is_present:  # Only draw placeholder if part is False
+            print(f"Right arm part '{part}' is missing, placing empty box.")
+            # Find the corresponding position in the layout data (structure or armor)
+            if part in layout_data["critical_hit_table"]["right_arm"]:
+                armor_diagram_info = layout_data["critical_hit_table"]["right_arm"][part]
+                add_placeholder_diagram(c, armor_diagram_info, "empty_placeholder.png")  # Assuming "empty_box.png" is the placeholder image
+            else:
+                print(f"Warning: No layout data found for right arm part '{part}'")
 
 
 
@@ -125,8 +169,8 @@ def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filenam
     add_checkmark(c, 'heatsink_type', custom_pdf["heat_data"], custom_mech)
 
     # Load weapon data and calculate BV
-    weapon_csv = "weapons_and_ammo.csv"
-    weapon_data = load_weapon_data(weapon_csv)
+    # weapon_csv = "weapons_and_ammo.csv"
+    # weapon_data = load_weapon_data(weapon_csv)
 
     # Save the canvas
     c.save()

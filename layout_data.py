@@ -399,7 +399,7 @@ custom_mech = {
     "mech_data": {
         "type": "Battlemaster",
         "tonnage": "85",
-        "tech_base": "C",
+        "tech_base": "IS",
         "movement_points": {
             "walking": "4",
             "running": "6",

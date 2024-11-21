@@ -4,23 +4,6 @@ import os
 import math
 from reportlab.lib.colors import red  # Import a color for the border
 
-def add_placeholder_diagram(c, armor_diagram_info, image_name):
-    """Draws the image with a border for debugging."""
-    image_path = os.path.join("sheet_images", image_name)
-    
-    # Calculate the position of the image
-    x_position = armor_diagram_info['x']
-    y_position = letter[1] - armor_diagram_info['y'] - armor_diagram_info['height']
-    
-    # Draw the image (assuming the image exists)
-    c.drawImage(ImageReader(image_path), x_position, y_position, 
-                width=armor_diagram_info['width'], height=armor_diagram_info['height'])
-    
-    # Draw a border around the image for debugging purposes
-    # c.setStrokeColor(red)  # Set the color of the border (red)
-    # c.setLineWidth(2)      # Set the border line width
-    # c.rect(x_position, y_position, armor_diagram_info['width'], armor_diagram_info['height'])
-
 def add_armor_points(c, armor_diagram_info, armor_points):
     # Define the radius of the circles representing armor points
     circle_radius = 2

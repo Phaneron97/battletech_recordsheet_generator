@@ -11,27 +11,28 @@ import csv
 import re
 
 # Load weapon data from CSV and clean the "Damage" and "Heat" columns
-def load_weapon_data(csv_filename):
-    weapon_data = {}
+# def load_weapon_data(csv_filename):
+#     weapon_data = {}
     
-    with open(csv_filename, mode='r', newline='') as file:
-        reader = csv.DictReader(file)
+#     with open(csv_filename, mode='r', newline='') as file:
+#         reader = csv.DictReader(file)
         
-        for row in reader:
-            # Normalize the weapon name for consistent lookup
-            weapon_name = row["Weapon/Item"].strip().lower().replace(" ", "_")
+#         for row in reader:
+#             # Normalize the weapon name for consistent lookup
+#             weapon_name = row["Weapon/Item"].strip().lower().replace(" ", "_")
             
-            # Extract primary damage and heat values by removing the trailing "(x)" part if present
-            damage = re.sub(r'\s*\(.*\)$', '', row["Damage"]).strip()
-            heat = re.sub(r'\s*\(.*\)$', '', row["Heat"]).strip()
+#             # Extract primary damage and heat values by removing the trailing "(x)" part if present
+#             damage = re.sub(r'\s*\(.*\)$', '', row["Damage"]).strip()
+#             heat = re.sub(r'\s*\(.*\)$', '', row["Heat"]).strip()
             
-            # Convert damage and heat to integers where applicable
-            weapon_data[weapon_name] = {
-                "damage": int(damage) if damage.isdigit() else damage,
-                "heat": int(heat) if heat.isdigit() else heat
-            }
+#             # Convert damage and heat to integers where applicable
+#             weapon_data[weapon_name] = {
+#                 "damage": int(damage) if damage.isdigit() else damage,
+#                 "heat": int(heat) if heat.isdigit() else heat
+#             }
     
-    return weapon_data
+#     # print(weapon_data)
+#     return weapon_data
 
 
 # Calculate Battle Value (BV)
@@ -148,24 +149,24 @@ def find_closest_image(mech_type, image_folder):
     mech_type_lower = mech_type.lower()
 
     # Debug: Print directory contents
-    print(f"Searching for '{mech_type}' in '{image_folder}'")
-    print("Directory contents:", os.listdir(image_folder))  # List all files in the directory
+    # print(f"Searching for '{mech_type}' in '{image_folder}'")
+    # print("Directory contents:", os.listdir(image_folder))  # List all files in the directory
 
     # Search through the folder for an exact case-insensitive match
     for file_name in os.listdir(image_folder):
         file_base_name, file_ext = os.path.splitext(file_name)
 
         # Debug: Print each file being checked
-        print(f"Checking file: '{file_base_name}{file_ext}' against '{mech_type}'")
+        # print(f"Checking file: '{file_base_name}{file_ext}' against '{mech_type}'")
 
         # Check if the lowercase file name matches the mech type exactly
         if file_base_name.lower() == mech_type_lower:
             full_path = os.path.join(image_folder, file_name)
-            print(f"Match found: {full_path}")  # Debug line for match confirmation
+            print(f"Image match found: {full_path}")  # Debug line for match confirmation
             return full_path
 
     # If no match is found, print debug message
-    print(f"No match found for '{mech_type}' in '{image_folder}'")
+    print(f"No image match found for '{mech_type}' in '{image_folder}'")
     return None
 
 

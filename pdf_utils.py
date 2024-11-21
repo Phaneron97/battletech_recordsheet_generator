@@ -14,6 +14,24 @@ pdfmetrics.registerFont(TTFont('EurostileBold', 'fonts/EurostileBold.ttf'))
 pdfmetrics.registerFont(TTFont('Eurostile', 'fonts/EuroStile.ttf'))
 
 
+def add_placeholder_diagram(c, armor_diagram_info, image_name):
+    """Draws the image with a border for debugging."""
+    image_path = os.path.join("sheet_images", image_name)
+    
+    # Calculate the position of the image
+    x_position = armor_diagram_info['x']
+    y_position = letter[1] - armor_diagram_info['y'] - armor_diagram_info['height']
+    
+    # Draw the image (assuming the image exists)
+    c.drawImage(ImageReader(image_path), x_position, y_position, 
+                width=armor_diagram_info['width'], height=armor_diagram_info['height'])
+    
+    # Draw a border around the image for debugging purposes
+    # c.setStrokeColor(red)  # Set the color of the border (red)
+    # c.setLineWidth(2)      # Set the border line width
+    # c.rect(x_position, y_position, armor_diagram_info['width'], armor_diagram_info['height'])
+
+
 def add_checkmark(c, entity_type, entity_checkmark, custom_mech=None):
     """Draws a checkmark based on the given entity type (tech base or heatsink type)."""
     checkmark_image = "sheet_images/checkmark.png"
@@ -125,7 +143,6 @@ def populate_critical_hit_table(c, custom_mech, critical_hit_table):
                 used_slots += 1
 
 
-
 def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filename, weapon_details):
     # Ensure the output directory exists
     output_dir = os.path.dirname(output_filename)
@@ -200,8 +217,8 @@ def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filenam
     add_checkmark(c, 'heatsink_type', custom_pdf["heat_data"], custom_mech)
 
     # Load weapon data and calculate BV
-    weapon_csv = "weapons_and_ammo.csv"
-    weapon_data = load_weapon_data(weapon_csv)
+    # weapon_csv = "weapons_and_ammo.csv"
+    # weapon_data = load_weapon_data(weapon_csv)
 
     # Save the canvas
     c.save()

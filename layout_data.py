@@ -274,51 +274,123 @@ custom_pdf = {
         "double": { "x": 533, "y": 745 }
     },
     "critical_hit_table": {
-        "head": {
-
+        "head": {                
+            "1": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1, "reserved": True},
+            "2": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1, "reserved": True},
+            "3": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1, "reserved": True},
+            "4": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "5": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1, "reserved": True},            
+            "6": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1, "reserved": True},
         },
         "center_torso": {
-
+            "1": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1, "reserved": True},
+            "2": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1, "reserved": True},
+            "3": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1, "reserved": True},
+            "4": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1, "reserved": True},
+            "5": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1, "reserved": True},            
+            "6": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1, "reserved": True},
+            "7": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1, "reserved": True},
+            "8": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1, "reserved": True},
+            "9": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "10": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "11": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},            
+            "12": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
         },
         "left_torso": {
-
+            "1": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "2": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "3": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "4": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "5": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},            
+            "6": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "7": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "8": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "9": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "10": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "11": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},            
+            "12": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
         },
         "right_torso": {
-
+            "1": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "2": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "3": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "4": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "5": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},            
+            "6": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "7": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "8": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "9": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "10": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "11": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},            
+            "12": {"x": 100, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
         },
         "left_arm": {
-            "lower_arm_actuator": {
-                "x": 75,
-                "y": 445,
-                "width": 80,
-                "height": 8
-            },
-            "hand_actuator": {
-                "x": 75,
-                "y": 453,
-                "width": 80,
-                "height": 8
-            }
+            # "lower_arm_actuator": {
+            #     "x": 75,
+            #     "y": 445,
+            #     "width": 80,
+            #     "height": 8
+            # },
+            # "hand_actuator": {
+            #     "x": 75,
+            #     "y": 453,
+            #     "width": 80,
+            #     "height": 8
+            # },
+            "1": {"x": 300, "y": 192, "font": "Eurostile", "size": 10, "margin": 1, "reserved": True},
+            "2": {"x": 300, "y": 192, "font": "Eurostile", "size": 10, "margin": 1, "reserved": True},
+            "3": {"x": 300, "y": 192, "font": "Eurostile", "size": 10, "margin": 1, "lower_arm_actuator": {"x": 75,"y": 445,"width": 80,"height": 8}},
+            "4": {"x": 300, "y": 192, "font": "Eurostile", "size": 10, "margin": 1, "hand_actuator": {"x": 75, "y": 453, "width": 80, "height": 8}},
+            "5": {"x": 300, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},            
+            "6": {"x": 300, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "7": {"x": 300, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "8": {"x": 300, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "9": {"x": 300, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "10": {"x": 300, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "11": {"x": 300, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},            
+            "12": {"x": 300, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
         },
         "right_arm": {
-            "lower_arm_actuator": {
-                "x": 300,
-                "y": 445,
-                "width": 80,
-                "height": 8
-            },
-            "hand_actuator": {
-                "x": 300,
-                "y": 453,
-                "width": 80,
-                "height": 8
-            }
+            # "lower_arm_actuator": {
+            #     "x": 300,
+            #     "y": 445,
+            #     "width": 80,
+            #     "height": 8
+            # },
+            # "hand_actuator": {
+            #     "x": 300,
+            #     "y": 453,
+            #     "width": 80,
+            #     "height": 8
+            # },
+            "1": {"x": 300, "y": 192, "font": "Eurostile", "size": 10, "margin": 1, "reserved": True},
+            "2": {"x": 300, "y": 192, "font": "Eurostile", "size": 10, "margin": 1, "reserved": True},
+            "3": {"x": 300, "y": 192, "font": "Eurostile", "size": 10, "margin": 1, "lower_arm_actuator": {"x": 300, "y": 445, "width": 80, "height": 8}},
+            "4": {"x": 300, "y": 192, "font": "Eurostile", "size": 10, "margin": 1, "hand_actuator": {"x": 300, "y": 453, "width": 80, "height": 8}},
+            "5": {"x": 300, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},            
+            "6": {"x": 300, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "7": {"x": 300, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "8": {"x": 300, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "9": {"x": 300, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "10": {"x": 300, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
+            "11": {"x": 300, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},            
+            "12": {"x": 300, "y": 192, "font": "Eurostile", "size": 10, "margin": 1},
         },
         "left_leg": {
-
+            "1": {"x": 75, "y": 445, "font": "Eurostile", "size": 10, "margin": 1, "reserved": True},
+            "2": {"x": 75, "y": 445, "font": "Eurostile", "size": 10, "margin": 1, "reserved": True},
+            "3": {"x": 75, "y": 445, "font": "Eurostile", "size": 10, "margin": 1, "reserved": True},
+            "4": {"x": 75, "y": 445, "font": "Eurostile", "size": 10, "margin": 1, "reserved": True},
+            "5": {"x": 75, "y": 445, "font": "Eurostile", "size": 10, "margin": 1},            
+            "6": {"x": 75, "y": 445, "font": "Eurostile", "size": 10, "margin": 1},
         },
         "right_leg": {
-
+            "1": {"x": 75, "y": 445, "font": "Eurostile", "size": 10, "margin": 1, "reserved": True},
+            "2": {"x": 75, "y": 445, "font": "Eurostile", "size": 10, "margin": 1, "reserved": True},
+            "3": {"x": 75, "y": 445, "font": "Eurostile", "size": 10, "margin": 1, "reserved": True},
+            "4": {"x": 75, "y": 445, "font": "Eurostile", "size": 10, "margin": 1, "reserved": True},
+            "5": {"x": 75, "y": 445, "font": "Eurostile", "size": 10, "margin": 1},            
+            "6": {"x": 75, "y": 445, "font": "Eurostile", "size": 10, "margin": 1},
         }
     }
 }

@@ -130,28 +130,27 @@ def add_heat_points(c, heat_data_info, total_heatsinks):
 
 
 def add_placeholder_for_arm_parts(c, custom_mech, layout_data):
-    """Draws an empty box on the armor diagram for arm parts that are False in either left or right arm."""
-    
+    """
+    Draws an empty box on the armor diagram for arm parts (lower arm actuator or hand actuator) 
+    that are missing (False) in either the left or right arm.
+    """
+
+    # Helper function to process arm parts
+    def process_arm_parts(arm_side, arm_parts_key):
+        for part, is_present in custom_mech["mech_data"][arm_parts_key].items():
+            if not is_present:  # Only draw placeholder if part is missing
+                print(f"{arm_side.capitalize()} arm part '{part}' is missing, placing empty box.")
+                
+                # Check if the part exists in the layout data critical hit table
+                critical_slot = layout_data["critical_hit_table"][arm_side].get(part)
+                if critical_slot:
+                    # Use the slot info for positioning the placeholder
+                    add_placeholder_diagram(c, critical_slot, "empty_placeholder.png")
+                else:
+                    print(f"Warning: No layout data found for {arm_side} arm part '{part}'")
+
     # Handle Left Arm parts
-    for part, is_present in custom_mech["mech_data"]["left_arm_parts"].items():
-        if not is_present:  # Only draw placeholder if part is False
-            print(f"Left arm part '{part}' is missing, placing empty box.")
-            # Find the corresponding position in the layout data (structure or armor)
-            if part in layout_data["critical_hit_table"]["left_arm"]:
-                armor_diagram_info = layout_data["critical_hit_table"]["left_arm"][part]
-                add_placeholder_diagram(c, armor_diagram_info, "empty_placeholder.png")  # Assuming "empty_box.png" is the placeholder image
-            else:
-                print(f"Warning: No layout data found for left arm part '{part}'")
+    process_arm_parts("left_arm", "left_arm_parts")
 
     # Handle Right Arm parts
-    for part, is_present in custom_mech["mech_data"]["right_arm_parts"].items():
-        if not is_present:  # Only draw placeholder if part is False
-            print(f"Right arm part '{part}' is missing, placing empty box.")
-            # Find the corresponding position in the layout data (structure or armor)
-            if part in layout_data["critical_hit_table"]["right_arm"]:
-                armor_diagram_info = layout_data["critical_hit_table"]["right_arm"][part]
-                add_placeholder_diagram(c, armor_diagram_info, "empty_placeholder.png")  # Assuming "empty_box.png" is the placeholder image
-            else:
-                print(f"Warning: No layout data found for right arm part '{part}'")
-
-
+    process_arm_parts("right_arm", "right_arm_parts")

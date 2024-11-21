@@ -52,6 +52,79 @@ def add_checkmark(c, entity_type, entity_checkmark, custom_mech=None):
         raise ValueError(f"Position not found for entity_type '{entity_type}' or invalid checkmark image path.")
 
 
+def populate_critical_hit_table(c, custom_mech, critical_hit_table):
+    """
+    Populates the critical hit table with weapons, heat sinks, and ammo.
+    Remaining slots are filled with 'Roll Again', while respecting reserved slots.
+    """
+    # Helper to write text to a critical slot
+    def write_to_slot(slot_info, text):
+        print(f"Writing '{text}' to slot:", slot_info)
+        c.setFont(slot_info["font"], slot_info["size"])
+        c.drawString(slot_info["x"], letter[1] - slot_info["y"], text)
+
+    # Iterate over each component in the critical hit table
+    for component, slots in critical_hit_table.items():
+        print(f"Processing component: {component}")
+
+        # Get the total number of slots for the component
+        total_slots = len(slots)
+        print(f"Total slots for {component}: {total_slots}")
+
+        # Initialize slot usage
+        used_slots = 0
+
+        # Skip reserved slots initially
+        free_slots = {k: v for k, v in slots.items() if not v.get("reserved", False)}
+
+        # Place weapons
+        weapons = custom_mech["weapons"].get(component, {})
+        for weapon_name, quantity in weapons.items():
+            for _ in range(quantity):
+                if used_slots < len(free_slots):
+                    slot_key = str(used_slots + 1)
+                    slot_info = free_slots.get(slot_key)
+                    if slot_info:
+                        write_to_slot(slot_info, weapon_name)
+                        used_slots += 1
+                else:
+                    print(f"No more slots available in {component} for weapons.")
+                    break
+
+        # Place heat sinks
+        heatsinks = custom_mech["heatsinks"]["heatsink_locations"].get(component, 0)
+        for _ in range(heatsinks):
+            if used_slots < len(free_slots):
+                slot_key = str(used_slots + 1)
+                slot_info = free_slots.get(slot_key)
+                if slot_info:
+                    write_to_slot(slot_info, "Heat Sink")
+                    used_slots += 1
+            else:
+                print(f"No more slots available in {component} for heat sinks.")
+                break
+
+        # Place ammunition
+        ammo = custom_mech["ammunition"].get(component, {})
+        for ammo_type, quantity in ammo.items():
+            for _ in range(quantity):
+                if used_slots < len(free_slots):
+                    slot_key = str(used_slots + 1)
+                    slot_info = free_slots.get(slot_key)
+                    if slot_info:
+                        write_to_slot(slot_info, f"Ammo ({ammo_type})")
+                        used_slots += 1
+                else:
+                    print(f"No more slots available in {component} for ammo.")
+                    break
+
+        # Fill remaining free slots with "Roll Again"
+        for slot_key, slot_info in free_slots.items():
+            if used_slots < len(free_slots) and not slot_info.get("reserved", False):
+                write_to_slot(slot_info, "Roll Again")
+                used_slots += 1
+
+
 
 def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filename, weapon_details):
     # Ensure the output directory exists
@@ -78,7 +151,8 @@ def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filenam
     mech_type = custom_mech_info.get("type")
     if mech_type:
         add_mech_image(c, mech_type, custom_pdf["mech_image"])
-
+        
+    c.setFont("Eurostile", 9)  # Set font for weapon details
     # Add the placeholder diagrams for armor and weapons
     add_placeholder_diagram(c, custom_pdf["armor_diagram"], "armor_diagram_empty.png")
     add_placeholder_diagram(c, custom_pdf["structure_diagram"], "structure_diagram_empty.png")
@@ -87,12 +161,13 @@ def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filenam
     add_placeholder_for_arm_parts(c, custom_mech, custom_pdf)
     add_armor_points(c, custom_pdf["armor_diagram"], custom_mech["armor_points"])
     add_armor_points(c, custom_pdf["structure_diagram"], custom_mech["structure_points"])
+    populate_critical_hit_table(c, custom_mech, custom_pdf["critical_hit_table"])
 
     # Calculate total heat sinks
-    total_heatsinks = calculate_total_heatsinks(custom_mech)
+    # total_heatsinks = calculate_total_heatsinks(custom_mech)
 
     # Draw the heat sink points on the canvas
-    add_heat_points(c, custom_pdf["heat_data"], total_heatsinks)
+    add_heat_points(c, custom_pdf["heat_data"], calculate_total_heatsinks(custom_mech))
 
     # Add weapons and equipment
     start_y = custom_pdf["mech_data"]["weapons_and_equipment_inv_text"]["y"]

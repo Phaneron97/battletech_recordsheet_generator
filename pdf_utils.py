@@ -73,11 +73,12 @@ def add_checkmark(c, entity_type, entity_checkmark, custom_mech=None):
 def populate_critical_hit_table(c, custom_mech, critical_hit_table):
     """
     Populates the critical hit table with weapons, heat sinks, and ammo.
-    Remaining slots are filled with 'Roll Again', while respecting reserved slots.
+    Items that take up multiple slots will occupy the required number of consecutive slots.
+    Remaining slots are filled with 'Roll Again', while respecting reserved and actuator-occupied slots.
     """
     # Helper to write text to a critical slot
-    def write_to_slot(slot_info, text):
-        print(f"Writing '{text}' to slot:", slot_info)
+    def write_to_slot(slot_info, text, slot_key):
+        print(f"Writing '{text}' to slot {slot_key} {slot_info}")
         c.setFont(slot_info["font"], slot_info["size"])
         c.drawString(slot_info["x"], letter[1] - slot_info["y"], text)
 
@@ -85,39 +86,57 @@ def populate_critical_hit_table(c, custom_mech, critical_hit_table):
     for component, slots in critical_hit_table.items():
         print(f"Processing component: {component}")
 
-        # Get the total number of slots for the component
-        total_slots = len(slots)
-        print(f"Total slots for {component}: {total_slots}")
-
-        # Initialize slot usage
-        used_slots = 0
-
-        # Skip reserved slots initially
+        # Separate reserved and free slots
+        reserved_slots = {k: v for k, v in slots.items() if v.get("reserved", False)}
         free_slots = {k: v for k, v in slots.items() if not v.get("reserved", False)}
+
+        print(f"Reserved slots: {reserved_slots.keys()}")
+        print(f"Free slots: {free_slots.keys()}")
+
+        # Track which free slots have been used
+        used_slot_keys = set()
+
+        # Check for actuators or other components that occupy slots
+        if component in ["left_arm", "right_arm"]:
+            # Check for actuators in custom_mech
+            arm_parts = custom_mech["mech_data"].get(f"{component}_parts", {})
+            for part, is_present in arm_parts.items():
+                if is_present:
+                    # Find the slot occupied by the actuator and mark it as used
+                    for slot_key, slot_info in slots.items():
+                        if part in slot_info:  # Slot is used by the actuator
+                            print(f"{component}: Slot {slot_key} occupied by {part}")
+                            used_slot_keys.add(slot_key)
 
         # Place weapons
         weapons = custom_mech["weapons"].get(component, {})
         for weapon_name, quantity in weapons.items():
             for _ in range(quantity):
-                if used_slots < len(free_slots):
-                    slot_key = str(used_slots + 1)
-                    slot_info = free_slots.get(slot_key)
-                    if slot_info:
-                        write_to_slot(slot_info, weapon_name)
-                        used_slots += 1
+                # Find the next available free slot(s)
+                slots_required = get_slots_required(weapon_name)  # Function to determine how many slots are required
+                free_slot_keys = [slot_key for slot_key in free_slots.keys() if slot_key not in used_slot_keys]
+
+                if len(free_slot_keys) >= slots_required:
+                    for i in range(slots_required):
+                        slot_key = free_slot_keys[i]
+                        slot_info = free_slots[slot_key]
+                        write_to_slot(slot_info, weapon_name, slot_key)
+                        used_slot_keys.add(slot_key)
                 else:
-                    print(f"No more slots available in {component} for weapons.")
+                    print(f"Not enough slots available in {component} for {weapon_name}.")
                     break
 
         # Place heat sinks
         heatsinks = custom_mech["heatsinks"]["heatsink_locations"].get(component, 0)
         for _ in range(heatsinks):
-            if used_slots < len(free_slots):
-                slot_key = str(used_slots + 1)
-                slot_info = free_slots.get(slot_key)
-                if slot_info:
-                    write_to_slot(slot_info, "Heat Sink")
-                    used_slots += 1
+            # Heat sinks take 1 slot each
+            free_slot_keys = [slot_key for slot_key in free_slots.keys() if slot_key not in used_slot_keys]
+
+            if free_slot_keys:
+                slot_key = free_slot_keys[0]
+                slot_info = free_slots[slot_key]
+                write_to_slot(slot_info, "Heat Sink", slot_key)
+                used_slot_keys.add(slot_key)
             else:
                 print(f"No more slots available in {component} for heat sinks.")
                 break
@@ -126,21 +145,39 @@ def populate_critical_hit_table(c, custom_mech, critical_hit_table):
         ammo = custom_mech["ammunition"].get(component, {})
         for ammo_type, quantity in ammo.items():
             for _ in range(quantity):
-                if used_slots < len(free_slots):
-                    slot_key = str(used_slots + 1)
-                    slot_info = free_slots.get(slot_key)
-                    if slot_info:
-                        write_to_slot(slot_info, f"Ammo ({ammo_type})")
-                        used_slots += 1
+                # Ammo takes 1 slot each
+                free_slot_keys = [slot_key for slot_key in free_slots.keys() if slot_key not in used_slot_keys]
+
+                if free_slot_keys:
+                    slot_key = free_slot_keys[0]
+                    slot_info = free_slots[slot_key]
+                    write_to_slot(slot_info, f"Ammo ({ammo_type})", slot_key)
+                    used_slot_keys.add(slot_key)
                 else:
                     print(f"No more slots available in {component} for ammo.")
                     break
 
         # Fill remaining free slots with "Roll Again"
         for slot_key, slot_info in free_slots.items():
-            if used_slots < len(free_slots) and not slot_info.get("reserved", False):
-                write_to_slot(slot_info, "Roll Again")
-                used_slots += 1
+            if slot_key not in used_slot_keys:
+                write_to_slot(slot_info, "Roll Again", slot_key)
+                used_slot_keys.add(slot_key)
+
+
+def get_slots_required(weapon_name):
+    """
+    Returns the number of critical slots required for a given weapon.
+    This function should refer to a predefined dictionary or logic
+    mapping weapon names to their critical slot usage.
+    """
+    weapon_slots = {
+        "PPC": 3,  # PPC takes 3 slots
+        "Machine_Gun": 1,  # Machine Gun takes 1 slot
+        "Medium_Laser": 1,  # Medium Laser takes 1 slot
+        "SRM_6": 2,  # SRM-6 takes 2 slots
+        # Add other weapons as needed
+    }
+    return weapon_slots.get(weapon_name, 1)  # Default to 1 slot if weapon is not found
 
 
 def draw_debug_grid(c, page_width, page_height, grid_size=100):
@@ -155,6 +192,7 @@ def draw_debug_grid(c, page_width, page_height, grid_size=100):
     """
     c.setStrokeColorRGB(0, 0, 1)  # Set stroke color to blue
     c.setDash(3, 3)  # Set line style to dotted (3 points on, 3 points off)
+    c.setFillColorRGB(0, 0, 1)
     c.setFont("Helvetica", 10)  # Set font for coordinate labels
 
     # Draw vertical lines and annotate coordinates
@@ -244,7 +282,7 @@ def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filenam
     add_checkmark(c, 'heatsink_type', custom_pdf["heat_data"], custom_mech)
 
     # Draw a debug grid to aid with positioning
-    draw_debug_grid(c, page_width, page_height)
+    # draw_debug_grid(c, page_width, page_height)
 
     # Save the canvas
     c.save()

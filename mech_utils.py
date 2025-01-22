@@ -47,11 +47,19 @@ def calculate_battle_value(custom_mech, weapon_data):
         """Calculates the armor factor based on total armor points and a type modifier."""
         total_armor = sum(armor_points.values())
         return total_armor * 2.5 * armor_type_modifier
+    
+    # print("armor factor: ", calculate_armor_factor(armor_points))
 
     def calculate_internal_structure_points(structure_points, structure_type_modifier=1.0, engine_modifier=1.0):
         """Calculates the structure factor based on structure points, modifiers, and engine type."""
         total_structure_points = sum(structure_points.values())
         return total_structure_points * 1.5 * structure_type_modifier * engine_modifier
+    
+    def calculate_gyro_factor(mech_tonnage, mech_gyro_modifier = .5):
+        gyro_factor = mech_tonnage * mech_gyro_modifier
+        return gyro_factor
+    # print("armor factor: ", calculate_internal_structure_points(structure_points, )
+
 
     # Extract armor and structure data
     armor_points = custom_mech["armor_points"]
@@ -61,11 +69,10 @@ def calculate_battle_value(custom_mech, weapon_data):
     # Calculate factors for DBR
     armor_factor = calculate_armor_factor(armor_points)
     structure_factor = calculate_internal_structure_points(structure_points)
-    gyro_modifier = 0.5
-    gyro_bv = mech_tonnage * gyro_modifier
+    gyro_factor = calculate_gyro_factor(mech_tonnage, .5)
 
     # Defensive Battle Rating (DBR)
-    defensive_battle_rating = (armor_factor + structure_factor + gyro_bv) * 1.2
+    defensive_equipment_bv = (armor_factor + structure_factor + gyro_factor) * 1.2
 
     # Print debug information for DBR
     # print("Armor Factor:", armor_factor)
@@ -99,6 +106,10 @@ def calculate_battle_value(custom_mech, weapon_data):
     offensive_battle_rating = weapon_bv_total * speed_factor
 
     # Print debug information for OBR
+    print("armor factor:", armor_factor)
+    print("internal structure factor:", structure_factor)
+    print("gyro factor:", gyro_factor)
+    print("defensive battle rating", defensive_equipment_bv)
     print("Weapon BV Total:", weapon_bv_total)
     print("Speed Factor:", speed_factor)
     print("Offensive Battle Rating:", offensive_battle_rating)
@@ -116,8 +127,10 @@ def calculate_battle_value(custom_mech, weapon_data):
     # Print debug information for Ammo Penalty
     print("Ammunition Penalty:", ammo_penalty)
 
+    final_defensive_battle_rating = defensive_equipment_bv - ammo_penalty
+
     # Step 4: Final BV Calculation - Total up DBR, OBR, and subtract ammo penalty
-    total_bv = max(1, defensive_battle_rating + offensive_battle_rating - ammo_penalty)  # Ensure BV is at least 1
+    total_bv = max(1, final_defensive_battle_rating + offensive_battle_rating)  # Ensure BV is at least 1
     final_bv = math.ceil(total_bv)
 
     # Print Final Battle Value

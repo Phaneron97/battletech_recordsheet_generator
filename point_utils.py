@@ -3,6 +3,7 @@ from reportlab.lib.utils import ImageReader
 import os
 import math
 from reportlab.lib.colors import red  # Import a color for the border
+from pdf_utils import *
 
 def add_armor_points(c, armor_diagram_info, armor_points):
     # Define the radius of the circles representing armor points

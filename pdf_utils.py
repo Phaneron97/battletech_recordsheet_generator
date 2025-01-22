@@ -143,6 +143,35 @@ def populate_critical_hit_table(c, custom_mech, critical_hit_table):
                 used_slots += 1
 
 
+def draw_debug_grid(c, page_width, page_height, grid_size=100):
+    """
+    Draws a blue dotted grid over the entire PDF page and adds coordinate labels at each intersection.
+    
+    Args:
+        c: The canvas object.
+        page_width: Width of the page in points.
+        page_height: Height of the page in points.
+        grid_size: Size of each grid cell in points (default is 100).
+    """
+    c.setStrokeColorRGB(0, 0, 1)  # Set stroke color to blue
+    c.setDash(3, 3)  # Set line style to dotted (3 points on, 3 points off)
+    c.setFont("Helvetica", 10)  # Set font for coordinate labels
+
+    # Draw vertical lines and annotate coordinates
+    for x in range(0, int(page_width), grid_size):
+        c.line(x, 0, x, page_height)  # Draw the vertical line
+        for y in range(0, int(page_height), grid_size):
+            # Add a coordinate label at each grid intersection
+            c.drawString(x + 2, page_height - y - 10, f"({x},{y})")  # Adjust positioning for clarity
+    
+    # Draw horizontal lines
+    for y in range(0, int(page_height), grid_size):
+        c.line(0, y, page_width, y)  # Draw the horizontal line
+
+    # Reset canvas settings
+    c.setDash(1, 0)  # Solid lines after this function
+
+
 def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filename, weapon_details):
     # Ensure the output directory exists
     output_dir = os.path.dirname(output_filename)
@@ -159,6 +188,7 @@ def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filenam
     
     # Create a new PDF to add text and images
     c = canvas.Canvas(temp_filename, pagesize=letter)
+    page_width, page_height = letter
 
     # Get custom mech
     custom_mech_info = custom_mech["mech_data"]
@@ -181,9 +211,6 @@ def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filenam
     populate_critical_hit_table(c, custom_mech, custom_pdf["critical_hit_table"])
 
     # Calculate total heat sinks
-    # total_heatsinks = calculate_total_heatsinks(custom_mech)
-
-    # Draw the heat sink points on the canvas
     add_heat_points(c, custom_pdf["heat_data"], calculate_total_heatsinks(custom_mech))
 
     # Add weapons and equipment
@@ -216,9 +243,8 @@ def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filenam
     # Add heatsink type checkmark
     add_checkmark(c, 'heatsink_type', custom_pdf["heat_data"], custom_mech)
 
-    # Load weapon data and calculate BV
-    # weapon_csv = "weapons_and_ammo.csv"
-    # weapon_data = load_weapon_data(weapon_csv)
+    # Draw a debug grid to aid with positioning
+    draw_debug_grid(c, page_width, page_height)
 
     # Save the canvas
     c.save()

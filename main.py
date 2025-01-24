@@ -10,7 +10,7 @@ weapon_data = load_weapon_data('weapons_and_ammo.csv')
 
 # Extract weapon details from custom_mech
 weapon_details = extract_weapon_details(custom_mech["weapons"], weapon_data)
-# print(weapon_details)
+print("weapon_details", weapon_details)
 
 output_filled_pdf = "pdfs/filled_record_sheet.pdf"
 template_pdf = "pdfs/blank_record_sheet.pdf"

@@ -211,6 +211,8 @@ def draw_debug_grid(c, page_width, page_height, grid_size=100):
 
 
 def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filename, weapon_details):
+    print("weapon_details", weapon_details)
+
     # Ensure the output directory exists
     output_dir = os.path.dirname(output_filename)
     if not os.path.exists(output_dir):
@@ -249,7 +251,7 @@ def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filenam
     populate_critical_hit_table(c, custom_mech, custom_pdf["critical_hit_table"])
 
     # Calculate total heat sinks
-    add_heat_points(c, custom_pdf["heat_data"], calculate_total_heatsinks(custom_mech))
+    add_heat_points(c, custom_pdf["heat_data"], calculate_amount_heatsinks(custom_mech))
 
     # Add weapons and equipment
     start_y = custom_pdf["mech_data"]["weapons_and_equipment_inv_text"]["y"]
@@ -282,7 +284,7 @@ def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filenam
     add_checkmark(c, 'heatsink_type', custom_pdf["heat_data"], custom_mech)
 
     # Draw a debug grid to aid with positioning
-    # draw_debug_grid(c, page_width, page_height)
+    draw_debug_grid(c, page_width, page_height)
 
     print("mech BV:", calculate_battle_value(custom_mech, weapon_details))
 

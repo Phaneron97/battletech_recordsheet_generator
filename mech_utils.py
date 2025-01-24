@@ -85,11 +85,11 @@ def calculate_battle_value(custom_mech, weapon_data):
     for location, weapons in custom_mech["weapons"].items():
         for weapon_name, quantity in weapons.items():
             # Normalize weapon name for lookup and retrieve stats
-            weapon_name_key = weapon_name.lower().replace(" ", "_")
-            if weapon_name_key in weapon_data:
-                damage = weapon_data[weapon_name_key]["damage"]
+            # weapon_name_key = weapon_name.lower().replace(" ", "_")
+            if weapon_name in weapon_data:
+                damage = weapon_data[weapon_name]["damage"]
 
-                heat = weapon_data[weapon_name_key]["heat"]
+                heat = weapon_data[weapon_name]["heat"]
                 weapon_bv = damage * heat  # BV calculation per weapon instance
                 # print("damage", damage)
                 # print("heat", heat)
@@ -97,6 +97,8 @@ def calculate_battle_value(custom_mech, weapon_data):
                 
                 # Convert quantity to integer before multiplication
                 weapon_bv_total += weapon_bv * int(quantity)
+
+    print("Weapon BV Total: ", weapon_bv_total)
 
     # Speed Factor based on movement points
     movement_points = custom_mech["mech_data"]["movement_points"]
@@ -142,12 +144,14 @@ def calculate_battle_value(custom_mech, weapon_data):
 def set_text_from_layout_data(c, mech_data, layout_data):
     """Draws mech data onto the PDF canvas, including both top-level and nested data items."""
     for key, data in mech_data.items():
+        print(f"key {key}, data {data}")
         if key in layout_data:
             info = layout_data[key]
             if isinstance(data, dict):
                 # Handle nested dictionaries (e.g., movement points)
                 for sub_key, sub_value in data.items():
                     if sub_key in layout_data[key]:
+                        
                         sub_info = layout_data[key][sub_key]
                         c.setFont(sub_info['font'], sub_info['size'])
                         c.drawString(sub_info['x'], letter[1] - sub_info['y'], str(sub_value))
@@ -249,7 +253,7 @@ def get_total_jumpjet_tonnage(mech_tonnage, jumping_mp):
 
 
 # Calculate total heat sinks
-def calculate_total_heatsinks(custom_mech):
+def calculate_amount_heatsinks(custom_mech):
     # Extract mech tonnage and walking movement points
     mech_tonnage = int(custom_mech["mech_data"]["tonnage"])
     walking_mp = int(custom_mech["mech_data"]["movement_points"]["walking"])
@@ -262,12 +266,12 @@ def calculate_total_heatsinks(custom_mech):
     additional_heatsinks = sum(custom_mech["heatsinks"]["heatsink_locations"].values())
 
     # Total heatsinks = internal + additional
-    total_heatsinks = internal_heatsinks + additional_heatsinks
+    amount_heatsinks = internal_heatsinks + additional_heatsinks
 
     # Print debug information for total heatsinks
     print("Engine Rating:", engine_rating)
     print("Internal Heat Sinks:", internal_heatsinks)
     print("Additional Heat Sinks:", additional_heatsinks)
-    print("Total Heat Sinks:", total_heatsinks)
+    print("Total Heat Sinks:", amount_heatsinks)
 
-    return total_heatsinks
+    return amount_heatsinks

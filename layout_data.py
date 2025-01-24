@@ -161,9 +161,9 @@ custom_pdf = {
         }
     },
     "structure_diagram": {
-        "x": 394,
+        "x": 393,
         "y": 413,
-        "width": 160,
+        "width": 159,
         "height": 172,
         "margin": 1,
         "head": {
@@ -271,6 +271,13 @@ custom_pdf = {
             "height": 92, 
             "rotation": 0,  
             "margin": 5
+        },
+        "heatsink_amount_text": {
+            "x": 528,
+            "y": 622,
+            "font": "Eurostile",
+            "size": 10,
+            "margin": 1
         },
         "single": { "x": 533, "y": 732 },
         "double": { "x": 533, "y": 745 }
@@ -443,17 +450,17 @@ custom_mech = {
         "head": {
         },
         "left_torso": {
-            "Medium_Laser": 3
+            "Medium Laser": 3
         },
         "right_torso": {
-            "Medium_Laser": 3,
-            "SRM_6": 1
+            "Medium Laser": 3,
+            "SRM 6": 1
         },
         "left_arm": {
             "PPC": 1
         },
         "right_arm": {
-            "Machine_Gun": 2
+            "Machine Gun": 2
         }
     },
     "heatsinks": {
@@ -467,7 +474,7 @@ custom_mech = {
     "ammunition": {
         "left_torso": {
             "SRM": 2,
-            "Machine_gun": 1
+            "Machine gun": 1
         }
     }
 }

@@ -69,9 +69,12 @@ def add_armor_points(c, armor_diagram_info, armor_points):
 
 
 def add_heat_points(c, heat_data_info, total_heatsinks):
-    """Adds heat sink points based on the calculated total heat sinks, using the 'heat_data_diagram' layout."""
+    """
+    Adds heat sink points based on the calculated total heat sinks, and displays
+    the total number of heat sinks at a specific location on the PDF.
+    """
     circle_radius = 3  # Radius for each heat sink point circle
-    
+
     def draw_circles(x_start, y_start, width, height, num_points, rotation, margin):
         """Draws circles in a grid layout to represent heat sinks."""
         available_width = width - 2 * margin
@@ -100,7 +103,10 @@ def add_heat_points(c, heat_data_info, total_heatsinks):
 
                 c.circle(x_rot, y_rot, circle_radius, fill=0)
 
+    # Draw the heat sink points in the grid
     heat_info = heat_data_info.get("heat_data_diagram", {})
+    print("heat_info", heat_info)
+
     if heat_info:
         draw_circles(
             heat_info["x"],
@@ -112,6 +118,22 @@ def add_heat_points(c, heat_data_info, total_heatsinks):
             heat_info.get("margin", 0)
         )
 
+    # Add the total heat sink amount to the PDF
+    heat_sink_amount_loc = heat_data_info.get("heatsink_amount_text", {})
+    print("heat_sink_amount_loc", heat_sink_amount_loc)
+
+    if heat_sink_amount_loc:
+        print(f"Printing total heatsinks ({total_heatsinks}) at {heat_sink_amount_loc}")
+        c.setFont(heat_sink_amount_loc["font"], heat_sink_amount_loc["size"])
+        c.drawString(
+            heat_sink_amount_loc["x"],
+            letter[1] - heat_sink_amount_loc["y"],
+            str(total_heatsinks)
+        )
+    else:
+        print("Warning: 'heatsink_amount_text' is missing from heat_data_info.")
+
+        
 
 def add_placeholder_for_arm_parts(c, custom_mech, layout_data):
     """

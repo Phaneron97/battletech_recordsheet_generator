@@ -19,7 +19,7 @@ def load_weapon_data(csv_filename):
             # print("Row (stripped):", row)  # Debugging line to check each row
 
             # Normalize the name for consistent lookup
-            name = row['Weapon/Item'].lower().replace(' ', '_')
+            name = row['Weapon/Item']
             
             # Extract data while handling fields with additional formatting
             heat_match = re.search(r'\d+', row['Heat'])
@@ -96,7 +96,7 @@ def extract_weapon_details(weapons, weapon_data):
     for location, weapon_info in weapons.items():
         for weapon_name, quantity in weapon_info.items():
             # Lookup weapon attributes, ensuring name consistency with loaded data
-            normalized_name = weapon_name.lower()
+            normalized_name = weapon_name
             if normalized_name in weapon_data:
                 weapon_attributes = weapon_data[normalized_name]
                 # Add formatted weapon detail to the list

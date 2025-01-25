@@ -84,39 +84,154 @@ def calculate_battle_value(custom_mech, weapon_data):
         """
         total_heat = 0
 
-        for location, weapons in custom_mech["weapons"].items():
-            for weapon_name, quantity in weapons.items():
-                # Normalize weapon name for lookup and retrieve stats
-                if weapon_name in weapon_data:
-                    weapon_info = weapon_data[weapon_name]
-                    base_heat = weapon_info.get("heat", 0)
-                    weapon_type = weapon_info.get("type", "").lower()
-                    weapon_quantity = int(quantity)
+        for weapon in weapon_data:
+            weapon_name = weapon.get("name", "").lower()
+            base_heat = int(weapon.get("heat", 0))
+            weapon_quantity = int(weapon.get("quantity", 1))
+            weapon_type = weapon_name  # Simplified as `type` isn't explicitly listed
 
-                    # Apply multipliers or reductions based on weapon type
-                    if "ultra autocannon" in weapon_type:
-                        effective_heat = base_heat * 2
-                    elif "rotary autocannon" in weapon_type:
-                        effective_heat = base_heat * 6
-                    elif "streak srm" in weapon_type:
-                        effective_heat = base_heat * 0.5
-                    elif "one-shot" in weapon_type:
-                        effective_heat = base_heat * 0.25
-                    else:
-                        effective_heat = base_heat
+            # Apply multipliers or reductions based on weapon type
+            if "ultra autocannon" in weapon_type:
+                effective_heat = base_heat * 2
+            elif "rotary autocannon" in weapon_type:
+                effective_heat = base_heat * 6
+            elif "streak srm" in weapon_type:
+                effective_heat = base_heat * 0.5
+            elif "one-shot" in weapon_type:
+                effective_heat = base_heat * 0.25
+            else:
+                effective_heat = base_heat
 
-                    # Add the total heat for all instances of this weapon
-                    total_heat += effective_heat * weapon_quantity
+            # Add the total heat for all instances of this weapon
+            total_heat += effective_heat * weapon_quantity
 
-                    # Debugging output
-                    print(
-                        f"Weapon: {weapon_name}, Type: {weapon_type}, Base Heat: {base_heat}, "
-                        f"Effective Heat: {effective_heat}, Quantity: {weapon_quantity}, "
-                        f"Total Heat for Weapon: {effective_heat * weapon_quantity}"
-                    )
+            # Debugging output
+            print(
+                f"Weapon: {weapon_name}, Base Heat: {base_heat}, "
+                f"Effective Heat: {effective_heat}, Quantity: {weapon_quantity}, "
+                f"Total Heat for Weapon: {effective_heat * weapon_quantity}"
+            )
 
         print(f"Total Weapon Heat: {total_heat}")
         return total_heat
+    
+    
+    def calc_weapon_battle_rating(custom_mech, weapon_data):
+        """
+        Calculates the Weapon Battle Rating (WBR) of a mech based on its weapons, heat efficiency, and tonnage.
+        """
+        # Helper function to get the Modified BV of a weapon
+        def get_modified_bv(weapon_name, weapon_info):
+            """
+            Calculates the Modified BV for a weapon based on specific modifiers for heat efficiency.
+            """
+            weapon_type = weapon_name.lower()
+            # Extract numeric part of damage
+            try:
+                base_damage = float(weapon_info.get("damage", "0").split('/')[0])  # Extract numeric part before '/'
+            except ValueError:
+                print(f"Warning: Invalid damage value for weapon {weapon_name}: {weapon_info.get('damage')}")
+                base_damage = 0
+
+            base_heat = int(weapon_info.get("heat", 0))  # Heat is expected to be a valid integer
+            base_bv = base_damage * base_heat  # BV = damage * heat
+
+            # Apply multipliers for specific weapon types
+            if "ultra autocannon" in weapon_type:
+                return base_bv * 2
+            elif "rotary autocannon" in weapon_type:
+                return base_bv * 6
+            elif "streak srm" in weapon_type:
+                return base_bv * 0.5
+            elif "one-shot" in weapon_type:
+                return base_bv * 0.25
+            else:
+                return base_bv
+
+        # Step 1: Initialize variables
+        weapon_battle_rating = 0
+        running_heat_total = 0
+        max_movement_heat = get_max_movement_heat(custom_mech)  # Custom function to calculate heat efficiency
+        total_weapon_heat = get_max_weapon_heat(custom_mech, weapon_data)
+        mech_tonnage = int(custom_mech["mech_data"]["tonnage"])
+
+        print(f"Max movement heat: {max_movement_heat}")
+        print(f"Total Weapon Heat: {total_weapon_heat}")
+
+        # Step 2: Add Modified BV of weapons that do not generate heat
+        for weapon in weapon_data:
+            weapon_name = weapon["name"]
+            weapon_heat = int(weapon["heat"])
+            if weapon_heat == 0:
+                modified_bv = get_modified_bv(weapon_name, weapon)
+                weapon_battle_rating += modified_bv
+                print(f"Adding {modified_bv} for weapon {weapon_name} (no heat generated)")
+
+        # Step 3: Add BV of ammunition and non-defensive equipment
+        ammunition_bv = 0
+        
+        for location, ammo_types in custom_mech.get("ammunition", {}).items():
+            for ammo_type, ammo in ammo_types.items():
+                # Ensure ammo is a dictionary-like structure before accessing attributes
+                if isinstance(ammo, dict):
+                    tonnage = int(ammo.get("tonnage", 0))
+                elif isinstance(ammo, int):  # If ammo is an integer, assume it represents tonnage directly
+                    tonnage = ammo
+                else:
+                    print(f"Unexpected ammo data type: {type(ammo)} in {location} for {ammo_type}")
+                    tonnage = 0
+
+                ammunition_bv += tonnage * 15  # 15 BV per ton of ammo
+
+        # Step 4: Determine if Total Weapon Heat <= Heat Efficiency
+        if total_weapon_heat <= max_movement_heat:
+            # Add Modified BV of all remaining weapons
+            for weapon in weapon_data:
+                modified_bv = get_modified_bv(weapon["name"], weapon)
+                weapon_battle_rating += modified_bv
+                print(f"Adding {modified_bv} for weapon {weapon['name']} (heat within efficiency)")
+        else:
+            # Start managing heat for Step 4-7
+            weapons = sorted(
+                weapon_data,
+                key=lambda w: (-get_modified_bv(w["name"], w), int(w["heat"]))
+            )
+            for weapon in weapons:
+                weapon_name = weapon["name"]
+                weapon_heat = int(weapon["heat"])
+                modified_bv = get_modified_bv(weapon_name, weapon)
+
+                if running_heat_total + weapon_heat <= max_movement_heat:
+                    # Add weapon's full BV
+                    running_heat_total += weapon_heat
+                    weapon_battle_rating += modified_bv
+                    print(f"Adding {modified_bv} for weapon {weapon_name}, running heat: {running_heat_total}")
+                else:
+                    # Add this weapon's full BV, even though it exceeds the heat efficiency
+                    weapon_battle_rating += modified_bv
+                    running_heat_total += weapon_heat
+                    print(
+                        f"Adding {modified_bv} for weapon {weapon_name} (exceeds heat efficiency), "
+                        f"running heat: {running_heat_total}"
+                    )
+
+                    # Add remaining weapons at half BV
+                    for remaining_weapon in weapons:
+                        if remaining_weapon["name"] == weapon_name:
+                            continue
+                        remaining_modified_bv = get_modified_bv(remaining_weapon["name"], remaining_weapon)
+                        weapon_battle_rating += remaining_modified_bv * 0.5
+                        print(
+                            f"Adding {remaining_modified_bv * 0.5} (half BV) for remaining weapon {remaining_weapon['name']}"
+                        )
+                    break
+
+        # Step 8: Add mech tonnage to Weapon Battle Rating
+        weapon_battle_rating += mech_tonnage
+        print(f"Adding {mech_tonnage} for mech tonnage")
+
+        print(f"Final Weapon Battle Rating: {weapon_battle_rating}")
+        return weapon_battle_rating
         
 
     # Extract armor and structure data
@@ -124,9 +239,9 @@ def calculate_battle_value(custom_mech, weapon_data):
     structure_points = custom_mech["structure_points"]
     mech_tonnage = int(custom_mech["mech_data"]["tonnage"])
     movement_heat_efficiency = 6 + calculate_amount_heatsinks(custom_mech) - get_max_movement_heat(custom_mech)
-    weapon_heat_efficiency = get_max_weapon_heat(custom_mech, weapon_data)
+    max_weapon_heat = get_max_weapon_heat(custom_mech, weapon_data)
     print("Movement Heat Efficiency", movement_heat_efficiency)
-    print("Weapon heat efficiency", weapon_heat_efficiency)
+    print("Max weapon heat", max_weapon_heat)
 
     # Calculate factors for DBR
     armor_factor = calculate_armor_factor(armor_points)
@@ -143,38 +258,43 @@ def calculate_battle_value(custom_mech, weapon_data):
     # print("Defensive Battle Rating:", defensive_battle_rating)
 
     # Step 2: Offensive Battle Rating (OBR)
-    weapon_bv_total = 0
-    for location, weapons in custom_mech["weapons"].items():
-        for weapon_name, quantity in weapons.items():
-            # Normalize weapon name for lookup and retrieve stats
-            # weapon_name_key = weapon_name.lower().replace(" ", "_")
-            if weapon_name in weapon_data:
-                damage = weapon_data[weapon_name]["damage"]
-
-                heat = weapon_data[weapon_name]["heat"]
-                weapon_bv = damage * heat  # BV calculation per weapon instance
-                # print("damage", damage)
-                # print("heat", heat)
-                # print("weaponbv",weapon_bv)
+    # weapon_bv_total = 0
+    # for location, weapons in custom_mech["weapons"].items():
+    #     for weapon_name, quantity in weapons.items():
+    #         print(f"{quantity}x {weapon_name}")
+    #         # Normalize weapon name for lookup and retrieve stats
+    #         # weapon_name_key = weapon_name.lower().replace(" ", "_")
+    #         # print("weapondata:", weapon_data)
+    #         if weapon_name in weapon_data:
                 
-                # Convert quantity to integer before multiplication
-                weapon_bv_total += weapon_bv * int(quantity)
+    #             damage = weapon_data[weapon_name]["damage"]
 
-    print("Weapon BV Total: ", weapon_bv_total)
+    #             heat = weapon_data[weapon_name]["heat"]
+    #             weapon_bv = damage * heat  # BV calculation per weapon instance
+    #             print("damage", damage)
+    #             print("heat", heat)
+    #             print("weaponbv",weapon_bv)
+                
+    #             # Convert quantity to integer before multiplication
+    #             weapon_bv_total += weapon_bv * int(quantity)
 
+    # print("Weapon BV Total: ", weapon_bv_total)
+    
+    weapon_battle_rating = calc_weapon_battle_rating(custom_mech, weapon_data)
+    print("total weapon battle rating:", weapon_battle_rating)
     # Speed Factor based on movement points
     movement_points = custom_mech["mech_data"]["movement_points"]
     running_speed = int(movement_points["running"])
     speed_factor = running_speed / 5
 
-    offensive_battle_rating = weapon_bv_total * speed_factor
+    offensive_battle_rating = weapon_battle_rating * speed_factor
 
     # Print debug information for OBR
     print("armor factor:", armor_factor)
     print("internal structure factor:", structure_factor)
     print("gyro factor:", gyro_factor)
     print("defensive battle rating", defensive_equipment_bv)
-    print("Weapon BV Total:", weapon_bv_total)
+    # print("Weapon BV Total:", weapon_bv_total)
     print("Speed Factor:", speed_factor)
     print("Offensive Battle Rating:", offensive_battle_rating)
 

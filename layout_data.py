@@ -37,6 +37,13 @@ custom_pdf = {
             "size": 10,
             "margin": 1
         },
+        "bv": {
+            "x": 160,
+            "y": 380,
+            "font": "Eurostile",
+            "size": 10,
+            "margin": 1
+        },        
         "weapons_and_equipment_inv_text": {
             "x": 42,
             "y": 557,
@@ -400,81 +407,6 @@ custom_pdf = {
             "4": {"x": 307, "y": 729, "font": "Eurostile", "size": 10, "margin": 1, "reserved": True},
             "5": {"x": 307, "y": 738, "font": "Eurostile", "size": 10, "margin": 1},            
             "6": {"x": 307, "y": 747, "font": "Eurostile", "size": 10, "margin": 1},
-        }
-    }
-}
-
-custom_mech = {
-    "mech_data": {
-        "type": "Battlemaster",
-        "tonnage": "85",
-        "tech_base": "IS",
-        "movement_points": {
-            "walking": "4",
-            "running": "6",
-            "jumping": "0"
-        },
-        "left_arm_parts": {
-            "lower_arm_actuator": True,
-            "hand_actuator": True
-        },
-        "right_arm_parts": {
-            "lower_arm_actuator": True,
-            "hand_actuator": True
-        }
-    },    
-    "armor_points": {
-        "head": 9,
-        "center_torso": 40,
-        "left_torso": 28,
-        "right_torso": 28,
-        "left_arm": 24,
-        "right_arm": 24,
-        "left_leg": 26,
-        "right_leg": 26,
-        "rear_center": 11,
-        "rear_left": 8,
-        "rear_right": 8
-    },
-    "structure_points": {
-        "head": 3,
-        "center_torso": 27,
-        "left_torso": 18,
-        "right_torso": 18,
-        "left_arm": 14,
-        "right_arm": 14,
-        "left_leg": 16,
-        "right_leg": 16
-    },
-    "weapons": {
-        "head": {
-        },
-        "left_torso": {
-            "Medium Laser": 3
-        },
-        "right_torso": {
-            "Medium Laser": 3,
-            "SRM 6": 1
-        },
-        "left_arm": {
-            "PPC": 1
-        },
-        "right_arm": {
-            "Machine Gun": 2
-        }
-    },
-    "heatsinks": {
-        "heatsink_type": "single",
-        "heatsink_locations": {
-            "right_torso": 1,
-            "right_leg": 2,
-            "left_leg": 2
-        }
-    },
-    "ammunition": {
-        "left_torso": {
-            "SRM": 2,
-            "Machine gun": 1
         }
     }
 }

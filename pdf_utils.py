@@ -286,7 +286,17 @@ def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filenam
     # Draw a debug grid to aid with positioning
     draw_debug_grid(c, page_width, page_height)
 
-    print("mech BV:", calculate_battle_value(custom_mech, weapon_details))
+    
+    # Calculate mech BV
+    mech_bv = calculate_battle_value(custom_mech, weapon_details)
+    print(f"Mech BV: {mech_bv}")
+
+    # Add mech BV to PDF
+    bv_settings = custom_pdf.get("bv", {})
+    print("bv_settings", bv_settings)
+    if bv_settings:
+        c.setFont(bv_settings["font"], bv_settings["size"])
+        c.drawString(bv_settings["x"], letter[1] - bv_settings["y"], str(mech_bv))
 
     # Save the canvas
     c.save()

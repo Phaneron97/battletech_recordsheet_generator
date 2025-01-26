@@ -284,7 +284,7 @@ def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filenam
     add_checkmark(c, 'heatsink_type', custom_pdf["heat_data"], custom_mech)
 
     # Draw a debug grid to aid with positioning
-    draw_debug_grid(c, page_width, page_height)
+    # draw_debug_grid(c, page_width, page_height)
 
     
     # Calculate mech BV
@@ -292,11 +292,12 @@ def create_filled_pdf(custom_mech, custom_pdf, output_filename, template_filenam
     print(f"Mech BV: {mech_bv}")
 
     # Add mech BV to PDF
-    bv_settings = custom_pdf.get("bv", {})
-    print("bv_settings", bv_settings)
-    if bv_settings:
-        c.setFont(bv_settings["font"], bv_settings["size"])
-        c.drawString(bv_settings["x"], letter[1] - bv_settings["y"], str(mech_bv))
+    bv_text_settings = (custom_pdf["mech_data"]["bv"])
+    print("bv_settings", bv_text_settings)
+    if bv_text_settings:
+        c.setFillColorRGB(0,0,0)
+        c.setFont(bv_text_settings["font"], bv_text_settings["size"])
+        c.drawString(bv_text_settings["x"], letter[1] - bv_text_settings["y"], str(mech_bv))
 
     # Save the canvas
     c.save()

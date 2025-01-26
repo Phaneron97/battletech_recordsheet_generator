@@ -10,30 +10,6 @@ import math
 import csv
 import re
 
-# Load weapon data from CSV and clean the "Damage" and "Heat" columns
-# def load_weapon_data(csv_filename):
-#     weapon_data = {}
-    
-#     with open(csv_filename, mode='r', newline='') as file:
-#         reader = csv.DictReader(file)
-        
-#         for row in reader:
-#             # Normalize the weapon name for consistent lookup
-#             weapon_name = row["Weapon/Item"].strip().lower().replace(" ", "_")
-            
-#             # Extract primary damage and heat values by removing the trailing "(x)" part if present
-#             damage = re.sub(r'\s*\(.*\)$', '', row["Damage"]).strip()
-#             heat = re.sub(r'\s*\(.*\)$', '', row["Heat"]).strip()
-            
-#             # Convert damage and heat to integers where applicable
-#             weapon_data[weapon_name] = {
-#                 "damage": int(damage) if damage.isdigit() else damage,
-#                 "heat": int(heat) if heat.isdigit() else heat
-#             }
-    
-#     # print(weapon_data)
-#     return weapon_data
-
 
 # Calculate Battle Value (BV)
 def calculate_battle_value(custom_mech, weapon_data):
@@ -43,23 +19,78 @@ def calculate_battle_value(custom_mech, weapon_data):
     """
 
     # Step 1: Defensive Battle Rating (DBR)
-    def calculate_armor_factor(armor_points, armor_type_modifier=1.0):
+    def get_target_modifier(custom_mech):
+        """
+        Determines the target modifier based on the highest movement value and movement type (walking, running, jumping).
+        If the highest movement type is jumping, an additional +1 is added.
+        """
+        target_modifier = 0
+        movement_points = custom_mech["mech_data"]["movement_points"]
+        
+        # Get the highest movement value and its corresponding key
+        highest_key = max(movement_points, key=lambda k: int(movement_points[k]))
+        highest_value = int(movement_points[highest_key])
+
+        # Determine the base target modifier based on movement value
+        if highest_value <= 2:
+            target_modifier = 0
+        elif 3 <= highest_value <= 4:
+            target_modifier = .1
+        elif 5 <= highest_value <= 6:
+            target_modifier = .2
+        elif 7 <= highest_value <= 9:
+            target_modifier = .3
+        elif highest_value >= 10:
+            target_modifier = .4
+
+        # Add +1 if the highest movement type is jumping
+        if highest_key == "jumping":
+            target_modifier += 1
+
+        return 1 + target_modifier
+
+    # print("target modifier:", get_target_modifier(custom_mech))
+    
+    # print(running_speed)
+    def get_armor_factor(armor_points, armor_type_modifier=1.0):
         """Calculates the armor factor based on total armor points and a type modifier."""
         total_armor = sum(armor_points.values())
         return total_armor * 2.5 * armor_type_modifier
-    
-    # print("armor factor: ", calculate_armor_factor(armor_points))
 
-    def calculate_internal_structure_points(structure_points, structure_type_modifier=1.0, engine_modifier=1.0):
+    def get_internal_structure_points(structure_points, structure_type_modifier=1.0, engine_modifier=1.0):
         """Calculates the structure factor based on structure points, modifiers, and engine type."""
         total_structure_points = sum(structure_points.values())
         return total_structure_points * 1.5 * structure_type_modifier * engine_modifier
     
-    def calculate_gyro_factor(mech_tonnage, mech_gyro_modifier = .5):
+    def get_gyro_factor(mech_tonnage, mech_gyro_modifier = .5):
         gyro_factor = mech_tonnage * mech_gyro_modifier
         return gyro_factor
-    # print("armor factor: ", calculate_internal_structure_points(structure_points, )
+    
+    def get_ammo_critical_space_penalty():
+        ammo_penalty = 0
+        critical_locations = ["center_torso", "head", "left_leg", "right_leg"]
 
+        for location, ammo in custom_mech.get("ammunition", {}).items():
+            for ammo_type, ammo_tonnage in ammo.items():
+                # Check if location is critical or lacks CASE protection
+                if location in critical_locations or not custom_mech.get("case_protection", {}).get(location, False):
+                    ammo_penalty += 15 * ammo_tonnage  # 15 points per ton of explosive ammo
+        return ammo_penalty
+    
+    def get_defensive_battle_rating():
+        # Calculate factors for DBR
+        # defensive_battle_rating = 0
+        armor_factor = get_armor_factor(custom_mech["armor_points"])
+        structure_factor = get_internal_structure_points(custom_mech["structure_points"])
+        gyro_factor = get_gyro_factor(int(custom_mech["mech_data"]["tonnage"]))
+        
+        defensive_battle_rating = (armor_factor + structure_factor + gyro_factor) * (get_target_modifier(custom_mech))
+        return defensive_battle_rating
+    
+    print("defensive battle rating:", get_defensive_battle_rating())
+
+
+    # Step 2: CALCULATE OFFENSIVE BATTLE RATING
     def get_max_movement_heat(custom_mech):
         """
         Determines the maximum movement heat needed to calculate the mech's heat efficiency.
@@ -68,7 +99,6 @@ def calculate_battle_value(custom_mech, weapon_data):
         movement_points = custom_mech["mech_data"]["movement_points"]
         print("movement_points", movement_points)
         jumping_points = int(movement_points.get("jumping", 0))  # Default to 0 if not present
-        running_points = int(movement_points.get("running", 0))  # Default to 0 if not present
 
         if jumping_points > 0:
             # print(f"Mech has jumping capability. Using jumping points: {jumping_points}")
@@ -77,6 +107,8 @@ def calculate_battle_value(custom_mech, weapon_data):
             # print(f"Mech does not have jumping capability. Using running points: {running_points}")
             return 2
         
+        
+    # Step 2: Offensive Battle Rating
     def get_max_weapon_heat(custom_mech, weapon_data):
         """
         Calculates the maximum heat generated by firing all weapons in the mech.
@@ -91,16 +123,14 @@ def calculate_battle_value(custom_mech, weapon_data):
             weapon_type = weapon_name  # Simplified as `type` isn't explicitly listed
 
             # Apply multipliers or reductions based on weapon type
-            if "ultra autocannon" in weapon_type:
+            if "ultra" in weapon_type:
                 effective_heat = base_heat * 2
-            elif "rotary autocannon" in weapon_type:
+            elif "rotary" in weapon_type:
                 effective_heat = base_heat * 6
-            elif "streak srm" in weapon_type:
+            elif "streak" in weapon_type:
                 effective_heat = base_heat * 0.5
-            elif "one-shot" in weapon_type:
+            else: # one shot
                 effective_heat = base_heat * 0.25
-            else:
-                effective_heat = base_heat
 
             # Add the total heat for all instances of this weapon
             total_heat += effective_heat * weapon_quantity
@@ -137,16 +167,14 @@ def calculate_battle_value(custom_mech, weapon_data):
             base_bv = base_damage * base_heat  # BV = damage * heat
 
             # Apply multipliers for specific weapon types
-            if "ultra autocannon" in weapon_type:
+            if "ultra" in weapon_type:
                 return base_bv * 2
-            elif "rotary autocannon" in weapon_type:
+            elif "rotary" in weapon_type:
                 return base_bv * 6
-            elif "streak srm" in weapon_type:
+            elif "streak" in weapon_type:
                 return base_bv * 0.5
-            elif "one-shot" in weapon_type:
+            else: # one shot
                 return base_bv * 0.25
-            else:
-                return base_bv
 
         # Step 1: Initialize variables
         weapon_battle_rating = 0
@@ -243,42 +271,10 @@ def calculate_battle_value(custom_mech, weapon_data):
     print("Movement Heat Efficiency", movement_heat_efficiency)
     print("Max weapon heat", max_weapon_heat)
 
-    # Calculate factors for DBR
-    armor_factor = calculate_armor_factor(armor_points)
-    structure_factor = calculate_internal_structure_points(structure_points)
-    gyro_factor = calculate_gyro_factor(mech_tonnage, .5)
+
 
     # Defensive Battle Rating (DBR)
-    defensive_equipment_bv = (armor_factor + structure_factor + gyro_factor) * 1.2
-
-    # Print debug information for DBR
-    # print("Armor Factor:", armor_factor)
-    # print("Structure Factor:", structure_factor)
-    # print("Gyro BV:", gyro_bv)
-    # print("Defensive Battle Rating:", defensive_battle_rating)
-
-    # Step 2: Offensive Battle Rating (OBR)
-    # weapon_bv_total = 0
-    # for location, weapons in custom_mech["weapons"].items():
-    #     for weapon_name, quantity in weapons.items():
-    #         print(f"{quantity}x {weapon_name}")
-    #         # Normalize weapon name for lookup and retrieve stats
-    #         # weapon_name_key = weapon_name.lower().replace(" ", "_")
-    #         # print("weapondata:", weapon_data)
-    #         if weapon_name in weapon_data:
-                
-    #             damage = weapon_data[weapon_name]["damage"]
-
-    #             heat = weapon_data[weapon_name]["heat"]
-    #             weapon_bv = damage * heat  # BV calculation per weapon instance
-    #             print("damage", damage)
-    #             print("heat", heat)
-    #             print("weaponbv",weapon_bv)
-                
-    #             # Convert quantity to integer before multiplication
-    #             weapon_bv_total += weapon_bv * int(quantity)
-
-    # print("Weapon BV Total: ", weapon_bv_total)
+    # defensive_equipment_bv = (armor_factor + structure_factor + gyro_factor) * 1.2
     
     weapon_battle_rating = calc_weapon_battle_rating(custom_mech, weapon_data)
     print("total weapon battle rating:", weapon_battle_rating)
@@ -290,37 +286,27 @@ def calculate_battle_value(custom_mech, weapon_data):
     offensive_battle_rating = weapon_battle_rating * speed_factor
 
     # Print debug information for OBR
-    print("armor factor:", armor_factor)
-    print("internal structure factor:", structure_factor)
-    print("gyro factor:", gyro_factor)
-    print("defensive battle rating", defensive_equipment_bv)
+    # print("armor factor:", armor_factor)
+    # print("internal structure factor:", structure_factor)
+    # print("gyro factor:", gyro_factor)
+    # print("defensive battle rating", defensive_equipment_bv)
     # print("Weapon BV Total:", weapon_bv_total)
-    print("Speed Factor:", speed_factor)
-    print("Offensive Battle Rating:", offensive_battle_rating)
+    # print("Speed Factor:", speed_factor)
+    # print("Offensive Battle Rating:", offensive_battle_rating)
 
     # Step 3: Ammunition Penalty (per ton of explosive ammo in critical locations or without CASE protection)
-    ammo_penalty = 0
-    critical_locations = ["center_torso", "head", "left_leg", "right_leg"]
 
-    for location, ammo in custom_mech.get("ammunition", {}).items():
-        for ammo_type, tonnage in ammo.items():
-            # Check if location is critical or lacks CASE protection
-            if location in critical_locations or not custom_mech.get("case_protection", {}).get(location, False):
-                ammo_penalty += 15 * tonnage  # 15 points per ton of explosive ammo
 
-    # Print debug information for Ammo Penalty
-    print("Ammunition Penalty:", ammo_penalty)
-
-    final_defensive_battle_rating = defensive_equipment_bv - ammo_penalty
+    # final_defensive_battle_rating = defensive_equipment_bv - get_ammo_critical_space_penalty()
 
     # Step 4: Final BV Calculation - Total up DBR, OBR, and subtract ammo penalty
-    total_bv = max(1, final_defensive_battle_rating + offensive_battle_rating)  # Ensure BV is at least 1
-    final_bv = math.ceil(total_bv)
+    # total_bv = max(1, final_defensive_battle_rating + offensive_battle_rating)  # Ensure BV is at least 1
+    # final_bv = math.ceil(total_bv)
 
     # Print Final Battle Value
-    print("Total Battle Value:", final_bv)
+    # print("Total Battle Value:", final_bv)
 
-    return final_bv
+    return None
 
 
 def set_text_from_layout_data(c, mech_data, layout_data):

@@ -38,8 +38,8 @@ custom_pdf = {
             "margin": 1
         },
         "bv": {
-            "x": 160,
-            "y": 380,
+            "x": 170,
+            "y": 376,
             "font": "Eurostile",
             "size": 10,
             "margin": 1
